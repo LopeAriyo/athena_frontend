@@ -8,8 +8,8 @@ class Welcome extends React.Component {
                 <p>Your menstural cycle personal assistant</p>
                 <button className="dark-btn"> <p className="light-text">Sign Up</p></button>
                 <button className="light-btn"><p className="dark-text">Sign In</p></button>
-                Not ready? Take a tour
                 <br />
+                <p className="grey-text">Not ready? Take a tour</p>
             </div>
         );
     }

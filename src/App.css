@@ -1,6 +1,6 @@
 .App {
     text-align: center;
-    background-color: #E6EBF5;
+    background-color: #e6ebf5;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -10,74 +10,136 @@
 }
 
 h1 {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 60px;
-  line-height: 73px;
-  align-items: center;
-  text-align: center
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 84px;
+    line-height: 102px;
 }
 
 h2 {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 60px;
-  line-height: 73px;
-  align-items: center;
-  text-align: center
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 60px;
+    line-height: 73px;
 }
 
 h3 {
-
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 59px;
 }
 
 h4 {
-
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 44px;
 }
 
-h5{
-
+h5 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
 }
 
-p{
-  font-family: Montserrat;
-font-style: normal;
-font-weight: normal;
-font-size: 16px;
-line-height: 20px;
-/* identical to box height */
-text-align: center;
+p1 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+p2 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+p3 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+p4 {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+caption {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-transform: uppercase;
 }
 
 .dark-text {
-  color: #28415A;
+    color: #28415a;
 }
 
 .light-text {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 .grey-text {
-  color: #8E8E93;
+    color: #8e8e93;
 }
 
 button {
-width: 300px;
-height: 46px;
-left: 35px;
-top: 637px;
-border-radius: 40px;
-box-shadow: 0px 10px 21px rgba(0, 0, 0, 0.0905231);
-margin-bottom: 20px;
+    width: 300px;
+    height: 45px;
+    left: 35px;
+    top: 637px;
+    border-radius: 40px;
+    box-shadow: 0px 10px 21px rgba(0, 0, 0, 0.0905231);
+    margin-bottom: 20px;
 }
 
-.dark-btn{
-  background: linear-gradient(180deg, #000000 0%, #28415A 100%);
+.dark-btn {
+    background: linear-gradient(180deg, #000000 0%, #28415a 100%);
 }
 
-.light-btn{
-  background: linear-gradient(180deg, #ffffff 0%, #FFFFFF 100%)
-  
+.light-btn {
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+}
+
+input {
+    height: 45px;
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 40px;
+    box-sizing: border-box;
+    box-shadow: 0px 11px 11px rgba(52, 84, 122, 0.0561594);
+    backdrop-filter: blur(40px);
+    margin-bottom: 20px;
+}
+.full-length-input {
+    width: 300px;
+}
+
+.half-length-input {
+    width: 140px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.error {
+    border: 1px solid red;
 }

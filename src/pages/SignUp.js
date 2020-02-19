@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom/";
 
-// import SignUpForm from "../../../components/secondary/SignUpForm.js";
+import SignUpForm from "../components/SignUpForm.js";
 
 class SignUp extends React.Component {
     render() {
@@ -10,8 +10,8 @@ class SignUp extends React.Component {
                 <Link to="/">
                     <button>Back</button>
                 </Link>
-                <h3>Create your account</h3>
-                {/* <SignUpForm /> */}
+                <h5>Create your account</h5>
+                <SignUpForm />
                 {/* <p>-OR-</p>
                 <SignUpWithSocials /> */}
                 {/* By signing up you accept the Terms of Service and Our Privacy Policy*/}

@@ -116,9 +116,18 @@ button {
     background: linear-gradient(180deg, #000000 0%, #28415a 100%);
 }
 
+
 .light-btn {
     background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
 }
+
+.dark-btn:disabled {
+    background:  #acacac;
+    color: #000000;
+}
+
+
+
 
 input {
     height: 45px;

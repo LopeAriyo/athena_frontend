@@ -7,9 +7,12 @@ class SignUp extends React.Component {
     render() {
         return (
             <div className="SignUp">
-                <Link to="/">
-                    <button>Back</button>
-                </Link>
+                <div className="top-nav">
+                    <Link to="/">
+                        <button>Back</button>
+                    </Link>
+                    <Link to="/signin">Sign In</Link>
+                </div>
                 <h5>Create your account</h5>
                 <SignUpForm />
                 {/* <p>-OR-</p>

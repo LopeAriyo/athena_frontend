@@ -9,18 +9,84 @@ class SignUpForm extends React.Component {
         passwordConfirmation: ""
     };
 
-    handleSubmit = () => {
-        //     API.signIn(this.state.email, this.state.password)
+    handleChange = event =>
+        this.setState({ [event.target.name]: event.target.value });
+
+    validate = (firstName, lastName, email, password, passwordConfirmation) => {
+        // true means invalid
+
+        const firstNameValidation =
+            firstName.length > 0 && //firstName must be present
+            firstName.length >= 2 &&
+            firstName.length <= 20; //firstName must be between 2 and 20 characters
+
+        const lastNameValidation =
+            lastName.length > 0 && //lastName must be present
+            lastName.length >= 2 &&
+            lastName.length <= 20; //lastName must be between 2 and 20 characters
+
+
+        const emailValidation = email.length > 0; //email must be present
+        //email must be unique //not validated here!
+        //STRETCH - email must be a correct email format
+        //const emailFormat = 
+        
+
+        const passwordValidation =
+            password.length > 0 &&
+            password.length >= 8 && //password must be present
+            password.length <= 20; //password must be between 8 and 20 characters
+
+        //STRETCH - show the user their password strength
+        //const passwordFormat =
+
+        const passwordConfirmationValidation =
+            passwordConfirmation.length > 0 && //passwordConfirmation must be present
+            passwordConfirmation === password; //passwordConfirmation must match password
+
+        return {
+            firstName: firstNameValidation,
+            lastName: lastNameValidation,
+            email: emailValidation,
+            password: passwordValidation,
+            passwordConfirmation: passwordConfirmationValidation
+        };
+    };
+
+    canSubmit() {
+        const {
+            firstName,
+            lastName,
+            email,
+            password,
+            passwordConfirmation
+        } = this.state;
+
+        const errors = this.validate(
+            firstName,
+            lastName,
+            email,
+            password,
+            passwordConfirmation
+        );
+        
+        return !(Object.keys(errors).some(x => errors[x]));
+    }
+
+    handleSubmit = event => {
+        if (!this.canSubmit()) {
+            event.preventDefault();
+            return;
+        }
+        //     API.signUp(this.state.email, this.state.password)
         //       .then(data => {
         //         if (data.error) throw Error(data.error)
         //         this.props.signIn(data)
         //         this.props.history.push('/inventory')
         //       })
         //       .catch(error => alert(error))
+        alert(`Signed Up`);
     };
-
-    handleChange = event =>
-        this.setState({ [event.target.name]: event.target.value });
 
     render() {
         const {
@@ -32,21 +98,25 @@ class SignUpForm extends React.Component {
         } = this.state;
         const { handleChange, handleSubmit } = this;
 
+        const errors = this.validate(firstName, lastName, email, password, passwordConfirmation);
+        const isDisabled = this.canSubmit();
+
         return (
             <div>
                 <form>
                     <input
                         id="firstNameInput"
-                        name="firstname"
-                        className="half-length-input"
+                        name="firstName"
+                        //className= "half-length-input"
+                        className = {errors.firstName ? "error half-length-input" : "half-length-input"}
                         placeholder="Enter First Name"
                         value={firstName}
                         onChange={handleChange}
                     />
                     <input
                         id="lastNameInput"
-                        name="lastname"
-                        className="half-length-input"
+                        name="lastName"
+                        className={errors.lastName ? "error half-length-input" : "half-length-input"}
                         placeholder="Enter Last Name"
                         value={lastName}
                         onChange={handleChange}
@@ -55,7 +125,7 @@ class SignUpForm extends React.Component {
                     <input
                         id="emailInput"
                         name="email"
-                        className="full-length-input"
+                        className={errors.email ? "error full-length-input" : "full-length-input"}
                         placeholder="Enter E-Mail Address"
                         value={email}
                         onChange={handleChange}
@@ -64,7 +134,7 @@ class SignUpForm extends React.Component {
                     <input
                         id="passwordInput"
                         name="password"
-                        className="full-length-input"
+                        className={errors.password ? "error full-length-input" : "full-length-input"}
                         placeholder="Create Password"
                         type="password"
                         value={password}
@@ -72,15 +142,19 @@ class SignUpForm extends React.Component {
                     />
                     <input
                         id="passwordConfirmationInput"
-                        name="confirmPassword"
-                        className="full-length-input"
+                        name="passwordConfirmation"
+                        className={errors.passwordConfirmation ? "error full-length-input" : "full-length-input"}
                         placeholder="Confirm Password"
                         type="password"
-                        value={password}
+                        value={passwordConfirmation}
                         onChange={handleChange}
                     />
                     <br />
-                    <button className="dark-btn" onClick={handleSubmit}>
+                    <button
+                        className="dark-btn"
+                        disabled={isDisabled}
+                        onClick={handleSubmit}
+                    >
                         <p className="light-text">Sign Up</p>
                     </button>
                 </form>

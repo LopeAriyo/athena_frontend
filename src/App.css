@@ -9,6 +9,17 @@
     align-items: center;
 }
 
+.Page {
+    text-align: center;
+    background-color: #233750;
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 h1 {
     font-family: Montserrat;
     font-style: normal;
@@ -95,19 +106,22 @@ caption {
 }
 
 .light-text {
-    color: #ffffff;
+    color: #C5D6ED;
 }
 
 .grey-text {
     color: #8e8e93;
 }
 
+.white-text {
+    color: #ffffff;
+}
+
 button {
-    width: 300px;
-    height: 45px;
     left: 35px;
     top: 637px;
     border-radius: 40px;
+    border: none;
     box-shadow: 0px 10px 21px rgba(0, 0, 0, 0.0905231);
     margin-bottom: 20px;
 }
@@ -116,9 +130,12 @@ button {
     background: linear-gradient(180deg, #000000 0%, #28415a 100%);
 }
 
-
 .light-btn {
-    background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+    background: linear-gradient(180deg, #c5d6ed 0%, #e6ebf5 100%);
+}
+
+.white-btn {
+    background: #ffffff;
 }
 
 .dark-btn:disabled {
@@ -126,6 +143,20 @@ button {
     color: #000000;
 }
 
+.light-btn:disabled {
+    background:  #acacac;
+    color: #000000;
+}
+
+.normal-btn {
+    width: 200px;
+    height: 40px
+}
+
+.small-btn {
+    width: 100px;
+    height: 35px
+}
 
 
 

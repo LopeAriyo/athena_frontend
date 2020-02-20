@@ -3,7 +3,7 @@ import { Route, withRouter, Switch } from "react-router-dom";
 
 import "./App.css";
 
-import API from "./API";
+import API from "./adapters/API";
 
 import Welcome from "./pages/Welcome";
 import SignIn from "./pages/SignIn";
@@ -17,7 +17,8 @@ import NavigationBar from "./components/NavigationBar";
 
 class App extends React.Component {
     state = {
-        user: null
+        user: null,
+        userPending: true
     };
 
     signUp = () => {
@@ -25,7 +26,7 @@ class App extends React.Component {
     };
 
     signIn = data => {
-        this.setState({ user: data });
+        this.setState({ user: data, userPending: false });
         localStorage.token = data.token;
     };
 
@@ -37,17 +38,20 @@ class App extends React.Component {
 
     componentDidMount() {
         if (localStorage.token) {
+            this.setState({ userPending: true });
+
             API.validate()
                 .then(data => {
                     if (data.error) throw Error(data.error);
                     this.signIn(data);
-                    this.props.history.push("/");
+                    // this.props.history.push("/");
                 })
                 .catch(error => alert(error));
         }
     }
 
     render() {
+        if (this.state.userPending) return <div>please wait</div>;
         return (
             <div className="App">
                 <Switch>

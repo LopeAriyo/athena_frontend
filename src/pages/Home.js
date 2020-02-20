@@ -1,22 +1,54 @@
 import React from "react";
 // import { Link } from "react-router-dom";
+import Clock from "react-live-clock";
 
 class Home extends React.Component {
-
     // componentDidMount() {
     //     if (this.props.user === null) {
     //         this.props.history.push("/");
     //     }
     // }
 
-    render() {
-        const {first_name} = this.props.user
-        return (
-            <div >
-                <h1>Good morning, {first_name}</h1>
-                <h3>Thursday, 20 February</h3>
+    getTimeOfDay() {
+        const today = new Date();
+        const currentTime = today.getHours();
 
-                {/* <button onClick={this.props.signOut}>Sign Out</button> */}
+        if (currentTime >= 6 && currentTime < 12) {
+            return "morning";
+        }
+
+        if (currentTime >= 12 && currentTime < 15) {
+            return "afternoon";
+        }
+
+        if (currentTime >= 15 && currentTime < 18) {
+            return "evening";
+        }
+
+        if (
+            (currentTime >= 18 && currentTime <= 23) ||
+            (currentTime >= 0 && currentTime < 6)
+        ) {
+            return "night";
+        }
+    }
+
+    render() {
+        const { first_name } = this.props.user;
+        const timeOfDay = this.getTimeOfDay();
+
+        return (
+            <div className="Page">
+                <h4 className="light-text"> Good {timeOfDay}, </h4>
+                <h4 className="white-text"> {first_name}</h4>
+                <h5 className="white-text">
+                    {" "}
+                    <div>
+                        <Clock format={"dddd"} ticking={true} />, 
+                        <br></br>
+                        <Clock format={"DD MMMM"} ticking={true} />
+                    </div>
+                </h5>
             </div>
         );
     }

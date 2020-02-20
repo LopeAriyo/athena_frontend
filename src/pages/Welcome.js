@@ -7,13 +7,13 @@ class Welcome extends React.Component {
                 <h2> athena. </h2>
                 <p>Your menstural cycle personal assistant</p>
                 <Link to="/signup">
-                    <button className="dark-btn">
+                    <button className="dark-btn normal-btn">
                         {" "}
                         <p className="light-text">Sign Up</p>
                     </button>
                 </Link>
                 <Link to="/signin">
-                    <button className="light-btn">
+                    <button className="white-btn normal-btn">
                         <p className="dark-text">Sign In</p>
                     </button>
                 </Link>

@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../API";
+import API from "../adapters/API";
 
 //TODO
 //+ Add forgot password functionality
@@ -84,7 +84,7 @@ class SignInForm extends React.Component {
                     />
                     {/* <p> Forgot Password? </p> */}
                     <button
-                        className="dark-btn"
+                        className="dark-btn normal-btn"
                         disabled={isDisabled}
                         onClick={handleSubmit}
                     >

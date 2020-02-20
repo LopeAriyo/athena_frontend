@@ -17,6 +17,12 @@ class Cycle extends React.Component {
         cycle: []
     };
 
+    // componentDidMount() {
+    //     if (this.props.user === null) {
+    //         this.props.history.push("/");
+    //     }
+    // }
+
     //Reminder
     //& cycleStartDate and cycleEndDate will come from props
 

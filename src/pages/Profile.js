@@ -2,12 +2,23 @@ import React from "react";
 // import { Link } from "react-router-dom";
 
 class Profile extends React.Component {
+
     render() {
-        return <div>
-        <h1>{this.props.user.first_name}</h1>
-        <h1>{this.props.user.email}</h1>
-        <button onClick={this.props.signOut}>Sign Out</button>
-        </div>;
+        const {first_name, last_name, email} = this.props.user
+        const { signOut } = this.props;
+
+        return (
+            <div>
+                <h5>
+                    {first_name} {last_name}
+                </h5>
+                <p>{email}</p>
+                <p>Goal</p>
+                <p>Track Cycle</p>
+                <button>Edit</button>
+                <button onClick={signOut}>Sign Out</button>
+            </div>
+        );
     }
 }
 

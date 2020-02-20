@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router-dom";
 
 import "./App.css";
 
@@ -12,6 +12,8 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Cycle from "./pages/Cycle";
+
+import NavigationBar from "./components/NavigationBar";
 
 class App extends React.Component {
     state = {
@@ -30,6 +32,7 @@ class App extends React.Component {
     signOut = () => {
         this.setState({ user: null });
         localStorage.removeItem("token");
+        this.props.history.push("/");
     };
 
     componentDidMount() {
@@ -48,21 +51,22 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Switch>
-                    {this.state.user === null ? (
-                        <Route
-                            exact
-                            path="/"
-                            component={props => <Welcome {...props} />}
-                        />
-                    ) : (
-                        <Route
-                            exact
-                            path="/"
-                            component={props => (
-                                <Home {...props} user={this.state.user} />
-                            )}
-                        />
-                    )}
+                    <Route
+                        exact
+                        path="/"
+                        component={props => <Welcome {...props} />}
+                    />
+                    <Route
+                        exact
+                        path="/home"
+                        component={props => (
+                            <Home
+                                {...props}
+                                // signOut={this.signOut}
+                                user={this.state.user}
+                            />
+                        )}
+                    />
                     <Route
                         path="/signup"
                         component={props => (
@@ -76,6 +80,12 @@ class App extends React.Component {
                         )}
                     />
                     <Route
+                        path="/cycle"
+                        component={props => (
+                            <Cycle {...props} user={this.state.user} />
+                        )}
+                    />
+                    <Route
                         path="/profile"
                         component={props => (
                             <Profile
@@ -85,16 +95,11 @@ class App extends React.Component {
                             />
                         )}
                     />
-                    <Route
-                        path="/cycle"
-                        component={props => (
-                            <Cycle {...props} user={this.state.user} />
-                        )}
-                    />
                 </Switch>
+                {this.state.user !== null && <NavigationBar />}
             </div>
         );
     }
 }
 
-export default App;
+export default withRouter(App);

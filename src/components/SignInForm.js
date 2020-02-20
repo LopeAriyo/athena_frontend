@@ -3,8 +3,6 @@ import React from "react";
 //TODO
 //+ Add forgot password functionality
 
-
-
 class SignInForm extends React.Component {
     state = {
         email: "",
@@ -14,27 +12,39 @@ class SignInForm extends React.Component {
     handleChange = event =>
         this.setState({ [event.target.name]: event.target.value });
 
+    validate = (email, password) => {
+        const emailValidation = email.length === 0;
+        const passwordValidation = password.length === 0;
+
+        return {
+            email: emailValidation,
+            password: passwordValidation
+        };
+    };
+
     canSubmit() {
-        const { email, password } = this.state;
-        //email must also be valid format
-        return email.length > 0 && password.length > 0;
+        const { email, password } = this.state;   
+     const errors = this.validate(email, password);
+
+        return !(Object.keys(errors).some(x => errors[x]));
     }
 
     handleSubmit = event => {
-        if (!this.canSubmit()){
+        if (!this.canSubmit()) {
             event.preventDefault();
             return;
         }
-    
+
         alert(`Signed In`);
-        
+        //Redirect to Home Page
     };
 
     render() {
         const { email, password } = this.state;
         const { handleChange, handleSubmit } = this;
 
-        const isEnabled = this.canSubmit();
+        const errors = this.validate(email, password);
+        const isDisabled = !this.canSubmit();
 
         return (
             <div>
@@ -42,7 +52,7 @@ class SignInForm extends React.Component {
                     <input
                         id="emailInput"
                         name="email"
-                        className="full-length-input"
+                        className={errors.email ? "error full-length-input" : "full-length-input"}
                         placeholder="E-Mail Address"
                         type="text"
                         value={email}
@@ -52,7 +62,7 @@ class SignInForm extends React.Component {
                     <input
                         id="passwordInput"
                         name="password"
-                        className="full-length-input"
+                        className={errors.password ? "error full-length-input" : "full-length-input"}
                         placeholder="Password"
                         type="password"
                         value={password}
@@ -61,7 +71,7 @@ class SignInForm extends React.Component {
                     {/* <p> Forgot Password? </p> */}
                     <button
                         className="dark-btn"
-                        disabled={!isEnabled}
+                        disabled={isDisabled}
                         onClick={handleSubmit}
                     >
                         <p className="light-text">Sign In</p>

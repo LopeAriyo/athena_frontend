@@ -13,36 +13,37 @@ class SignUpForm extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
 
     validate = (firstName, lastName, email, password, passwordConfirmation) => {
-        // true means invalid
+        // false means no errors
+        // true means a field is invalid
 
         const firstNameValidation =
-            firstName.length > 0 && //firstName must be present
-            firstName.length >= 2 &&
-            firstName.length <= 20; //firstName must be between 2 and 20 characters
+            firstName.length === 0 || //firstName must be present
+            firstName.length < 2 ||
+            firstName.length > 20; //firstName must be between 2 and 20 characters
 
         const lastNameValidation =
-            lastName.length > 0 && //lastName must be present
-            lastName.length >= 2 &&
-            lastName.length <= 20; //lastName must be between 2 and 20 characters
+            lastName.length === 0 ||//lastName must be present
+            lastName.length < 2 ||
+            lastName.length > 20; //lastName must be between 2 and 20 characters
 
 
-        const emailValidation = email.length > 0; //email must be present
+        const emailValidation = email.length === 0; //email must be present
         //email must be unique //not validated here!
         //STRETCH - email must be a correct email format
         //const emailFormat = 
         
 
         const passwordValidation =
-            password.length > 0 &&
-            password.length >= 8 && //password must be present
-            password.length <= 20; //password must be between 8 and 20 characters
+            password.length === 0 ||//password must be present
+            password.length < 8 || 
+            password.length > 20; //password must be between 8 and 20 characters
 
         //STRETCH - show the user their password strength
         //const passwordFormat =
 
         const passwordConfirmationValidation =
-            passwordConfirmation.length > 0 && //passwordConfirmation must be present
-            passwordConfirmation === password; //passwordConfirmation must match password
+            passwordConfirmation.length === 0 || //passwordConfirmation must be present
+            passwordConfirmation !== password; //passwordConfirmation must match password
 
         return {
             firstName: firstNameValidation,
@@ -86,6 +87,7 @@ class SignUpForm extends React.Component {
         //       })
         //       .catch(error => alert(error))
         alert(`Signed Up`);
+        //redirect to the Sign In
     };
 
     render() {
@@ -96,10 +98,11 @@ class SignUpForm extends React.Component {
             password,
             passwordConfirmation
         } = this.state;
+
         const { handleChange, handleSubmit } = this;
 
         const errors = this.validate(firstName, lastName, email, password, passwordConfirmation);
-        const isDisabled = this.canSubmit();
+        const isDisabled = !this.canSubmit();
 
         return (
             <div>
@@ -107,7 +110,6 @@ class SignUpForm extends React.Component {
                     <input
                         id="firstNameInput"
                         name="firstName"
-                        //className= "half-length-input"
                         className = {errors.firstName ? "error half-length-input" : "half-length-input"}
                         placeholder="Enter First Name"
                         value={firstName}

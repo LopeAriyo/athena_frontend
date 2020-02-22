@@ -32,7 +32,7 @@ class TrackForm extends React.Component {
                         // disabled={isDisabled}
                         // onClick={handleSubmit}
                     >
-                        <p className="dark-text">Track</p>
+                        <p className="normal-text dark-text">Track</p>
                     </button>
                 </form>
             </div>

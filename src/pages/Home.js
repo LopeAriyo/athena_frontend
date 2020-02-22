@@ -1,17 +1,10 @@
 import React from "react";
 // import { Link } from "react-router-dom";
-import Clock from "react-live-clock";
+import Moment from "react-moment";
 
 class Home extends React.Component {
-    // componentDidMount() {
-    //     if (this.props.user === null) {
-    //         this.props.history.push("/");
-    //     }
-    // }
-
-    getTimeOfDay() {
-        const today = new Date();
-        const currentTime = today.getHours();
+    getTimeOfDay(currentDateTime) {
+        const currentTime = currentDateTime.getHours();
 
         if (currentTime >= 6 && currentTime < 12) {
             return "morning";
@@ -35,7 +28,8 @@ class Home extends React.Component {
 
     render() {
         const { first_name } = this.props.user;
-        const timeOfDay = this.getTimeOfDay();
+        const currentDateTime = new Date();
+        const timeOfDay = this.getTimeOfDay(currentDateTime);
 
         return (
             <div className="Page">
@@ -44,9 +38,9 @@ class Home extends React.Component {
                 <h5 className="white-text">
                     {" "}
                     <div>
-                        <Clock format={"dddd"} ticking={true} />, 
+                        <Moment format="dddd," />
                         <br></br>
-                        <Clock format={"DD MMMM"} ticking={true} />
+                        <Moment format="DD MMMM" />
                     </div>
                 </h5>
             </div>

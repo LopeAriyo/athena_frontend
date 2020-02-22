@@ -13,7 +13,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Cycle from "./pages/Cycle";
 
-import NavigationBar from "./components/NavigationBar";
+import BottomNavigation from "./navigation/BottomNavigaton";
 
 class App extends React.Component {
     state = {
@@ -100,7 +100,7 @@ class App extends React.Component {
                         )}
                     />
                 </Switch>
-                {this.state.user !== null && <NavigationBar />}
+                {this.state.user !== null && <BottomNavigation />}
             </div>
         );
     }

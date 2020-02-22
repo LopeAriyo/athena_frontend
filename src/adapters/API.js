@@ -1,5 +1,7 @@
 const baseURL = "http://localhost:3000/";
-const signUpURL = baseURL + "signup";
+// const baseURL = "http://10.218.3.249:3000/";
+
+// const signUpURL = baseURL + "signup";
 const signInURL = baseURL + "signin";
 const validateURL = baseURL + "validate";
 
@@ -33,7 +35,6 @@ const signIn = (email, password) => {
 };
 
 const validate = () => get(validateURL);
-
 
 export default { signIn, validate };
 

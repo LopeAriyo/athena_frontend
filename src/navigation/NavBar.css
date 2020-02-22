@@ -1,0 +1,58 @@
+.TopNav {
+    overflow: hidden;
+    background-color: #28415a;
+    top: 0;
+    width: 100%;
+}
+
+.TopNav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 5%;
+    width: 10%;
+    text-decoration: none;
+    /* font-size: 17px; */
+}
+
+.TopNav a:hover {
+    background: #c5d6ed;
+    color: #28415a;
+    cursor: pointer;
+}
+
+.TopNav a.active {
+    background-color: #ffffff;
+    color: #28415a;
+}
+
+.BottomNav {
+    overflow: hidden;
+    background-color: #28415a;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.BottomNav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 5%;
+    width: 10%;
+    text-decoration: none;
+    /* font-size: 17px; */
+}
+
+.BottomNav a:hover {
+    background: #c5d6ed;
+    color: #28415a;
+    cursor: pointer;
+}
+
+.BottomNav a.active {
+    background-color: #ffffff;
+    color: #28415a;
+}

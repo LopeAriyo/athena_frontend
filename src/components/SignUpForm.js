@@ -1,5 +1,7 @@
 import React from "react";
 
+import API from "../adapters/API";
+
 class SignUpForm extends React.Component {
     state = {
         firstName: "",
@@ -22,20 +24,18 @@ class SignUpForm extends React.Component {
             firstName.length > 20; //firstName must be between 2 and 20 characters
 
         const lastNameValidation =
-            lastName.length === 0 ||//lastName must be present
+            lastName.length === 0 || //lastName must be present
             lastName.length < 2 ||
             lastName.length > 20; //lastName must be between 2 and 20 characters
-
 
         const emailValidation = email.length === 0; //email must be present
         //email must be unique //not validated here!
         //STRETCH - email must be a correct email format
-        //const emailFormat = 
-        
+        //const emailFormat =
 
         const passwordValidation =
-            password.length === 0 ||//password must be present
-            password.length < 8 || 
+            password.length === 0 || //password must be present
+            password.length < 8 ||
             password.length > 20; //password must be between 8 and 20 characters
 
         //STRETCH - show the user their password strength
@@ -70,8 +70,8 @@ class SignUpForm extends React.Component {
             password,
             passwordConfirmation
         );
-        
-        return !(Object.keys(errors).some(x => errors[x]));
+
+        return !Object.keys(errors).some(x => errors[x]);
     }
 
     handleSubmit = event => {
@@ -79,15 +79,23 @@ class SignUpForm extends React.Component {
             event.preventDefault();
             return;
         }
-        //     API.signUp(this.state.email, this.state.password)
-        //       .then(data => {
-        //         if (data.error) throw Error(data.error)
-        //         this.props.signIn(data)
-        //         this.props.history.push('/inventory')
-        //       })
-        //       .catch(error => alert(error))
+
+        const newUser = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password,
+            passwordConfirmation: this.state.passwordConfirmation
+        };
+
+        API.signUp(newUser)
+            .then(data => {
+                if (data.error) throw Error(data.error);
+                // this.props.signUp(data);
+                this.props.history.push("/signin");
+            })
+            .catch(error => alert(error));
         alert(`Signed Up`);
-        //redirect to the Sign In
     };
 
     render() {
@@ -101,7 +109,13 @@ class SignUpForm extends React.Component {
 
         const { handleChange, handleSubmit } = this;
 
-        const errors = this.validate(firstName, lastName, email, password, passwordConfirmation);
+        const errors = this.validate(
+            firstName,
+            lastName,
+            email,
+            password,
+            passwordConfirmation
+        );
         const isDisabled = !this.canSubmit();
 
         return (
@@ -110,7 +124,11 @@ class SignUpForm extends React.Component {
                     <input
                         id="firstNameInput"
                         name="firstName"
-                        className = {errors.firstName ? "error half-length-input" : "half-length-input"}
+                        className={
+                            errors.firstName
+                                ? "error half-length-input"
+                                : "half-length-input"
+                        }
                         placeholder="Enter First Name"
                         value={firstName}
                         onChange={handleChange}
@@ -118,7 +136,11 @@ class SignUpForm extends React.Component {
                     <input
                         id="lastNameInput"
                         name="lastName"
-                        className={errors.lastName ? "error half-length-input" : "half-length-input"}
+                        className={
+                            errors.lastName
+                                ? "error half-length-input"
+                                : "half-length-input"
+                        }
                         placeholder="Enter Last Name"
                         value={lastName}
                         onChange={handleChange}
@@ -127,7 +149,11 @@ class SignUpForm extends React.Component {
                     <input
                         id="emailInput"
                         name="email"
-                        className={errors.email ? "error full-length-input" : "full-length-input"}
+                        className={
+                            errors.email
+                                ? "error full-length-input"
+                                : "full-length-input"
+                        }
                         placeholder="Enter E-Mail Address"
                         value={email}
                         onChange={handleChange}
@@ -136,7 +162,11 @@ class SignUpForm extends React.Component {
                     <input
                         id="passwordInput"
                         name="password"
-                        className={errors.password ? "error full-length-input" : "full-length-input"}
+                        className={
+                            errors.password
+                                ? "error full-length-input"
+                                : "full-length-input"
+                        }
                         placeholder="Create Password"
                         type="password"
                         value={password}
@@ -145,7 +175,11 @@ class SignUpForm extends React.Component {
                     <input
                         id="passwordConfirmationInput"
                         name="passwordConfirmation"
-                        className={errors.passwordConfirmation ? "error full-length-input" : "full-length-input"}
+                        className={
+                            errors.passwordConfirmation
+                                ? "error full-length-input"
+                                : "full-length-input"
+                        }
                         placeholder="Confirm Password"
                         type="password"
                         value={passwordConfirmation}

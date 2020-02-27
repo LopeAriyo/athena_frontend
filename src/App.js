@@ -12,13 +12,18 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Cycle from "./pages/Cycle";
+// import Calendar from "./pages/Calendar";
+// import Insights from "./pages/Insights";
 
 import BottomNavigation from "./navigation/BottomNavigaton";
-
 class App extends React.Component {
     state = {
         user: null,
-        userPending: true
+        userPending: true,
+        cycles: [],
+        currentCycle: [],
+        today: new Date(),
+        journals: []
     };
 
     signUp = () => {
@@ -36,6 +41,18 @@ class App extends React.Component {
         this.props.history.push("/");
     };
 
+    getCycles = data => {
+        this.setState({ cycles: data });
+    };
+
+    getCurrentCycle = data => {
+        this.setState({ currentCycle: data });
+    };
+
+    getJournals = data => {
+        this.setState({ journals: data });
+    };
+
     componentDidMount() {
         if (localStorage.token) {
             this.setState({ userPending: true });
@@ -45,6 +62,27 @@ class App extends React.Component {
                     if (data.error) throw Error(data.error);
                     this.signIn(data);
                     // this.props.history.push("/");
+                })
+                .catch(error => alert(error));
+
+            API.cycles()
+                .then(data => {
+                    if (data.error) throw Error(data.error);
+                    this.getCycles(data);
+                })
+                .catch(error => alert(error));
+
+            API.currentCycle()
+                .then(data => {
+                    if (data.error) throw Error(data.error);
+                    this.getCurrentCycle(data);
+                })
+                .catch(error => alert(error));
+
+            API.journals()
+                .then(data => {
+                    if (data.error) throw Error(data.error);
+                    this.getJournals(data);
                 })
                 .catch(error => alert(error));
         }
@@ -86,7 +124,14 @@ class App extends React.Component {
                     <Route
                         path="/cycle"
                         component={props => (
-                            <Cycle {...props} user={this.state.user} />
+                            <Cycle
+                                {...props}
+                                user={this.state.user}
+                                getCurrentCycle={this.getCurrentCycle}
+                                currentCycle={this.state.currentCycle}
+                                journals={this.state.journals}
+                                estimatedCycleLength={28}
+                            />
                         )}
                     />
                     <Route

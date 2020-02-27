@@ -14,9 +14,11 @@ class Profile extends React.Component {
                 <p className="white-text">{email}</p>
                 <p className="light-text">Goal</p>
                 <p className="white-text">Track Cycle</p>
-                <button className="light-btn small-btn">Edit</button>
-                <button onClick={signOut} className="light-btn normal-btn">
-                    Sign Out
+                <button className="light-btn normal-btn">
+                    <p className="normal-text dark-text"> Edit</p>
+                </button>
+                <button onClick={signOut} className="dark-btn normal-btn">
+                    <p className="normal-text light-text"> Sign Out</p>
                 </button>
             </div>
         );

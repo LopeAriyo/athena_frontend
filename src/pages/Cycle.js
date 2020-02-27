@@ -1,205 +1,142 @@
-import React, { useState } from "react";
+import React from "react";
 import TopNavigation from "../navigation/TopNavigation";
 
-// import Moment from "react-moment";
-import CircularSlider from "react-circular-slider-svg";
+import CycleWheelContainer from "../components/CycleWheelContainer";
+import JournalForm from "../components/JournalForm";
+import JournalsContainer from "../components/JournalsContainer";
+import API from "../adapters/API";
+import AddJournalForm from "../components/AddJournalForm";
+class Cycle extends React.Component {
+    state = {
+        journalFormVisible: false,
+        cycleJournals: this.props.currentCycle.cycle_journals,
+        showAddJournalForm: false,
+        journalOptions: []
+    };
 
-import TrackForm from "../components/TrackForm";
+    createNewCycle = () => {
+        // needs to amend currentCycles cycle length
+        // needs today's date
+    };
 
-const Cycle = () => {
-    const [value1, setValue1] = useState(1);
-
-    let cycleStartDate = new Date("01/31/2020");
-    const cycleLength = 28;
-    const periodLength = 4;
-    const today = new Date();
-
-    const createCycle = () => {
-        let cycle = [];
-
-        for (let i = 0; i <= cycleLength; i++) {
-            cycleStartDate.setDate(cycleStartDate.getDate() + i);
-            var day = cycleStartDate.getDate(); //numerical day
-            var month = cycleStartDate.getMonth() + 1;
-            var year = cycleStartDate.getFullYear();
-
-            const date = new Date(year, month - 1, day); // 2009-11-10
-            const formattedMonth = date.toLocaleString("default", {
-                month: "short"
+    getCycleJournalDetails = id => {
+        API.getCycleJournal(id).then(cycleJournal => {
+            this.setState({
+                journalFormVisible: true,
+                cycleJournal
             });
-            var formattedCycleDate = {
-                displayDate: formattedMonth + " " + day,
-                referenceDate: { day: day, month: month, year: year }
-            };
-            cycle.push(formattedCycleDate);
-            cycleStartDate = new Date("01/31/2020");
-        }
-        return cycle;
+        });
     };
 
-    const cycle = createCycle();
-
-    const createPeriod = () => {
-        let period = [];
-
-        for (let i = 0; i <= periodLength; i++) {
-            cycleStartDate.setDate(cycleStartDate.getDate() + i);
-            var day = cycleStartDate.getDate(); //numerical day
-            var month = cycleStartDate.getMonth() + 1; // Jan = 0 hence the plus 1
-            var year = cycleStartDate.getFullYear(); // e.g. 2020
-
-            const date = new Date(year, month - 1, day); // 2009-11-10
-            const formattedMonth = date.toLocaleString("default", {
-                month: "short"
-            });
-            var formattedPeriodDate = {
-                displayDate: formattedMonth + " " + day,
-                referenceDate: { day: day, month: month, year: year }
-            };
-            period.push(formattedPeriodDate);
-            cycleStartDate = new Date("01/31/2020");
-        }
-        return period;
+    updateCycleJournals = journal => {
+        this.setState({
+            cycleJournals: [...this.state.cycleJournals, journal]
+        });
     };
 
-    const period = createPeriod();
-
-    const doesDateMatch = () => {
-        let date1 = today;
-        let date2 = new Date(
-            cycle[Math.round(value1) - 1].referenceDate.year,
-            cycle[Math.round(value1) - 1].referenceDate.month - 1,
-            cycle[Math.round(value1) - 1].referenceDate.day
+    deleteCycleJournal = journal => {
+        let deleteJournal = window.confirm(
+            `Are you sure you want to delete your ${journal.category} journal?`
         );
-        if (date1.toDateString() === date2.toDateString()) {
-            return true;
+
+        if (deleteJournal !== true) {
+            return;
         } else {
-            return false;
+            API.destroyCycleJournal(journal.id)
+                .then(() =>
+                    this.setState({
+                        cycleJournal: {},
+                        cycleJournals: [...this.state.cycleJournals].filter(
+                            oldJournal => oldJournal.id !== journal.id
+                        )
+                    })
+                )
+                .then(() => this.displayJournalOptions());
         }
     };
 
-    const isDateInFuture = () => {
-        let date1 = today;
-        let date2 = new Date(
-            cycle[Math.round(value1) - 1].referenceDate.year,
-            cycle[Math.round(value1) - 1].referenceDate.month - 1,
-            cycle[Math.round(value1) - 1].referenceDate.day
-        );
-        if (date2 > date1) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    isDateInFuture();
-
-    const isOnPeriod = () => {
-        if (period[Math.round(value1) - 1]) {
-            let date1 = new Date(
-                period[Math.round(value1) - 1].referenceDate.year,
-                period[Math.round(value1) - 1].referenceDate.month - 1,
-                period[Math.round(value1) - 1].referenceDate.day
-            );
-            let date2 = new Date(
-                cycle[Math.round(value1) - 1].referenceDate.year,
-                cycle[Math.round(value1) - 1].referenceDate.month - 1,
-                cycle[Math.round(value1) - 1].referenceDate.day
+    displayJournalOptions = () => {
+        if (this.state.cycleJournals) {
+            const currentJournalsCategories = this.state.cycleJournals.map(
+                journal => journal.category
             );
 
-            if (date1.toDateString() === date2.toDateString()) {
-                return true;
-            } else {
-                return false;
-            }
+            const filteredJournals = this.props.journals.filter(
+                journal => !currentJournalsCategories.includes(journal.category)
+            );
+
+            this.setState({ journalOptions: filteredJournals });
         }
-        return false;
     };
 
-    // const getStartAngle = todaysDate => {
-    //     // if todays date matches an element in the array return the index
-    //     // for each element in array
-    // };
+    toggleAddJournalForm = () => {
+        this.displayJournalOptions();
+        this.setState({
+            showAddJournalForm: !this.state.showAddJournalForm
+        });
+    };
 
-    return (
-        <div className="Page">
-            <TopNavigation pageName="Cycle" />
-            <div className="Component">
-                <CircularSlider
-                    size={300}
-                    startAngle={350 / cycleLength} //this needs to be decided by the current date
-                    endAngle={350}
-                    minValue={1}
-                    maxValue={cycleLength}
-                    angleType={{
-                        direction: "cw",
-                        axis: "+y"
-                    }}
-                    handle1={{
-                        value: value1,
-                        onChange: v => setValue1(v)
-                    }}
-                    arcColor="#233750"
-                    arcBackgroundColor="#233750"
-                />
-                <div className="CycleInfoCircle">
-                    <p className="white-text">Day</p>
-                    <h1 className="dark-text">{Math.round(value1)}</h1>
-                    {isOnPeriod() === true ? (
-                        <div>
-                            {periodLength + 1 - Math.round(value1) === 0 ? (
-                                <p className="small-text dark-text">
-                                    {" "}
-                                    Period ends today!{" "}
-                                </p>
-                            ) : (
-                                <p className="small-text dark-text">
-                                    Period ends in
-                                    {" " +
-                                        (periodLength +
-                                            1 -
-                                            Math.round(value1)) +
-                                        " "}
-                                    days
-                                </p>
-                            )}
-                        </div>
-                    ) : (
-                        <div>
-                            {cycleLength + 1 - Math.round(value1) !== 1 ? (
-                                <p className="small-text dark-text">
-                                    {" "}
-                                    Period starts in{" "}
-                                    {cycleLength + 1 - Math.round(value1)} days
-                                </p>
-                            ) : (
-                                <p className="small-text dark-text">
-                                    Period starts tomorrow
-                                </p>
-                            )}
-                        </div>
-                    )}
+    showJournalForm = () => {
+        this.setState({ journalFormVisible: !this.state.journalFormVisible });
+    };
+
+    closeJournalForm = () => {
+        this.setState({ journalFormVisible: false });
+    };
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("cycle did update");
+    }
+
+    render() {
+        return (
+            <div className="Page">
+                <TopNavigation pageName="Cycle" />
+
+                <div className="Component">
+                    <CycleWheelContainer
+                        currentCycle={this.props.currentCycle}
+                    />
+                    <br></br>
+
+                    <br></br>
+                    <button className="light-btn normal-btn">
+                        <p className="small-text dark-text"> Show Journals</p>
+                    </button>
                 </div>
-                <br></br>
-                <button className="light-btn normal-btn">
-                    {/* is date in future or today , if yes button  say Enter data for today else  */}
-                    {isDateInFuture() === true || doesDateMatch() === true ? (
-                        <p className="regular-text dark-text">
+                <JournalsContainer
+                    onJournalCardClick={this.getCycleJournalDetails}
+                    deleteCycleJournal={this.deleteCycleJournal}
+                    cycle_journals={this.state.cycleJournals}
+                />
+                {this.state.journalFormVisible && (
+                    <JournalForm
+                        journal={this.state.cycleJournal}
+                        closeJournalForm={this.closeJournalForm}
+                    />
+                )}
+                {this.state.showAddJournalForm && (
+                    <AddJournalForm
+                        updateCycleJournals={this.updateCycleJournals}
+                        getCurrentCycle={this.props.getCurrentCycle}
+                        journalOptions={this.state.journalOptions}
+                    />
+                )}
+                <button
+                    className="light-btn normal-btn"
+                    onClick={this.toggleAddJournalForm}
+                >
+                    {this.state.showAddJournalForm !== true ? (
+                        <p className="small-text dark-text">
                             {" "}
-                            Enter data for today
+                            Add a New Journal
                         </p>
                     ) : (
-                        <p className="regular-text dark-text">
-                            {" "}
-                            Enter data for{" "}
-                            {cycle[Math.round(value1) - 1].displayDate}
-                        </p>
+                        <p className="small-text dark-text"> Hide</p>
                     )}
                 </button>
             </div>
-            <TrackForm />
-        </div>
-    );
-};
-
+        );
+    }
+}
 export default Cycle;

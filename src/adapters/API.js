@@ -79,11 +79,14 @@ const formatToday = () => {
 
 const postEntry = (id, responses) =>
     post(entriesURL, { date: formatToday(), cycle_journal_id: id, responses });
+
 const patchEntry = (id, responses) => patch(entriesURL, id, { responses });
 
 const postCycleJournal = id => post(cycleJournalURL, { journal_id: id });
 
 const destroyCycleJournal = id => destroy(cycleJournalURL, id);
+
+const patchCycle = (id, cycle) => patch(cyclesURL, id, cycle);
 
 export default {
     signIn,
@@ -96,5 +99,6 @@ export default {
     destroyCycleJournal,
     journals,
     postEntry,
-    patchEntry
+    patchEntry,
+    patchCycle
 };

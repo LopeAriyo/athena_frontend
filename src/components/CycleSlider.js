@@ -6,10 +6,10 @@ const CycleSlider = props => {
         <div>
             <CircularSlider
                 size={300}
-                startAngle={350 / props.cycleLength}
-                endAngle={350}
+                startAngle={330 / props.cycleLength}
+                endAngle={330}
                 minValue={1}
-                maxValue={props.cycleLength}
+                maxValue={props.cycleLength + 2} //plus one because of array
                 angleType={{
                     direction: "cw",
                     axis: "+y"

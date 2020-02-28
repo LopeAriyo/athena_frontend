@@ -14,10 +14,22 @@ class Cycle extends React.Component {
         journalOptions: []
     };
 
+    patchCurrentCycle = () => {
+        // API.patchCycle(this.state.entryId, this.state.formData).then(() => {
+        //     this.props.closeJournalForm();
+        // })
+        console.log("I've patched the current cycle");
+
+        this.createNewCycle();
+    };
     createNewCycle = () => {
         // needs to amend currentCycles cycle length
         // needs today's date
+        console.log("I've created a new cycle");
     };
+
+    patchPreviousCycle = () => {};
+    deleteCurrentCycle = () => {};
 
     getCycleJournalDetails = id => {
         API.getCycleJournal(id).then(cycleJournal => {
@@ -95,14 +107,18 @@ class Cycle extends React.Component {
 
                 <div className="Component">
                     <CycleWheelContainer
+                        createNewCycle={this.createNewCycle}
+                        patchCurrentCycle={this.patchCurrentCycle}
+                        deleteCurrentCycle={this.deleteCurrentCycle}
+                        patchPreviousCycle={this.patchPreviousCycle}
                         currentCycle={this.props.currentCycle}
                     />
                     <br></br>
 
                     <br></br>
-                    <button className="light-btn normal-btn">
+                    {/* <button className="light-btn normal-btn">
                         <p className="small-text dark-text"> Show Journals</p>
-                    </button>
+                    </button> */}
                 </div>
                 <JournalsContainer
                     onJournalCardClick={this.getCycleJournalDetails}

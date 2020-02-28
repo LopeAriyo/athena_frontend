@@ -1,5 +1,6 @@
 import React from "react";
 import CycleSlider from "../components/CycleSlider";
+import API from "../adapters/API";
 
 class CycleWheelContainer extends React.Component {
     state = {
@@ -9,9 +10,8 @@ class CycleWheelContainer extends React.Component {
         today: new Date(),
         cycleArray: [],
         periodArray: [],
-        dateMatch: true,
-        cycleDay: 27,
-        isToday: true
+        cycleDay: 1,
+        dateMatch: true
     };
 
     setCycleDay = cycleDay => {
@@ -51,7 +51,7 @@ class CycleWheelContainer extends React.Component {
                 // resets the date back to the original day
             );
         }
-        this.setState({ cycleArray: cycle });
+        this.setState({ cycleArray: cycle }, () => this.findCycleDay());
     };
 
     createPeriod = () => {
@@ -84,23 +84,6 @@ class CycleWheelContainer extends React.Component {
         this.setState({ periodArray: period });
     };
 
-    isToday = date => {
-        const day = this.state.today.getDate();
-        const formattedMonth = this.state.today.toLocaleString("default", {
-            month: "short"
-        });
-        const formattedTodayDate = formattedMonth + " " + day;
-
-        this.setState({ isToday: date.displayDate === formattedTodayDate });
-        //returns a boolean to compare if date is equal to today
-    };
-
-    findCycleDay = () => {
-        this.setState({
-            cycleDay: this.state.cycleArray.findIndex(this.isToday)
-        });
-    };
-
     isOnPeriod = (cycleDay, period, cycle) => {
         const roundedCycleDay = Math.floor(cycleDay);
         if (period[roundedCycleDay]) {
@@ -124,6 +107,45 @@ class CycleWheelContainer extends React.Component {
         return false;
     };
 
+    doesDateMatch = (cycleDay, cycle) => {
+        const roundedCycleDay = Math.floor(cycleDay);
+        if (cycle[roundedCycleDay]) {
+            let date1 = this.state.today;
+            let date2 = new Date(
+                cycle[roundedCycleDay - 1].referenceDate.year,
+                cycle[roundedCycleDay - 1].referenceDate.month - 1,
+                cycle[roundedCycleDay - 1].referenceDate.day
+            );
+            console.log(date1.toDateString());
+            console.log(date2.toDateString());
+
+            if (date1.toDateString() === date2.toDateString()) {
+                console.log("true");
+                return true;
+            } else {
+                console.log("false");
+                return false;
+            }
+        }
+    };
+
+    isToday = date => {
+        const day = this.state.today.getDate();
+        const formattedMonth = this.state.today.toLocaleString("default", {
+            month: "short"
+        });
+        const formattedTodayDate = formattedMonth + " " + day;
+
+        return date.displayDate === formattedTodayDate;
+        //returns a boolean to compare if date is equal to today
+    };
+
+    findCycleDay = () => {
+        this.setState({
+            cycleDay: this.state.cycleArray.findIndex(this.isToday) + 1 //because of array
+        });
+    };
+
     componentDidMount() {
         this.createCycle();
         this.createPeriod();
@@ -138,71 +160,67 @@ class CycleWheelContainer extends React.Component {
             cycleArray
         } = this.state;
 
-        const { isOnPeriod } = this;
+        const { isOnPeriod, doesDateMatch } = this;
 
         return (
             <div>
-                {
-                    <CycleSlider
-                        value1={cycleDay}
-                        setValue1={this.setCycleDay}
-                        today={this.state.today}
-                        cycle={this.state.cycleArray}
-                        cycleLength={this.state.estimatedCycleLength}
-                    />
-                }
+                <CycleSlider
+                    value1={cycleDay}
+                    setValue1={this.setCycleDay}
+                    cycleLength={this.state.estimatedCycleLength}
+                />
+
                 <button
                     className="CycleInfoCircle"
-                    disabled={!this.state.dateMatch}
+                    disabled={!doesDateMatch(cycleDay, cycleArray)}
                 >
                     <p className="white-text">Day</p>
-                    <h1 className="dark-text">{Math.round(cycleDay)}</h1>
+                    <h1 className="dark-text">{Math.floor(cycleDay)}</h1>
                     {isOnPeriod(cycleDay, periodArray, cycleArray) === true ? (
                         <div>
-                            {estimatedPeriodLength - Math.round(cycleDay) <=
+                            {estimatedPeriodLength - Math.floor(cycleDay) >
                             1 ? (
-                                <div>
-                                    {estimatedPeriodLength -
-                                        Math.round(cycleDay) ===
-                                    0 ? (
-                                        <p className="small-text dark-text">
-                                            {" "}
-                                            Period ends today!{" "}
-                                        </p>
-                                    ) : (
-                                        <p className="small-text dark-text">
-                                            {" "}
-                                            Period ends tomorrow!{" "}
-                                        </p>
-                                    )}
-                                </div>
-                            ) : (
                                 <p className="small-text dark-text">
                                     Period ends in
                                     {" " +
                                         (estimatedPeriodLength -
-                                            Math.round(cycleDay)) +
+                                            Math.floor(cycleDay)) +
                                         " "}
                                     days
+                                </p>
+                            ) : (
+                                <p className="small-text dark-text">
+                                    {" "}
+                                    Period ends tomorrow!{" "}
                                 </p>
                             )}
                         </div>
                     ) : (
                         <div>
-                            {estimatedCycleLength + 1 - Math.round(cycleDay) !==
-                            1 ? (
+                            {estimatedPeriodLength - Math.floor(cycleDay) ===
+                            0 ? (
                                 <p className="small-text dark-text">
                                     {" "}
-                                    Period starts in{" "}
-                                    {estimatedCycleLength +
-                                        1 -
-                                        Math.round(cycleDay)}{" "}
-                                    days
+                                    Period ends today!{" "}
                                 </p>
                             ) : (
-                                <p className="small-text dark-text">
-                                    Period starts tomorrow
-                                </p>
+                                <div>
+                                    {estimatedCycleLength -
+                                        Math.floor(cycleDay) >=
+                                    2 ? (
+                                        <p className="small-text dark-text">
+                                            {" "}
+                                            Period starts in{" "}
+                                            {estimatedCycleLength +
+                                                -Math.floor(cycleDay)}{" "}
+                                            days
+                                        </p>
+                                    ) : (
+                                        <p className="small-text dark-text">
+                                            Period starts tomorrow
+                                        </p>
+                                    )}{" "}
+                                </div>
                             )}
                         </div>
                     )}

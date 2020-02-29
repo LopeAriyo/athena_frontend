@@ -9,7 +9,7 @@ const CycleSlider = props => {
                 startAngle={330 / props.cycleLength}
                 endAngle={330}
                 minValue={1}
-                maxValue={props.cycleLength + 2} //plus one because of array
+                maxValue={props.cycleLength}
                 angleType={{
                     direction: "cw",
                     axis: "+y"
@@ -18,7 +18,7 @@ const CycleSlider = props => {
                     value: props.value1,
                     onChange: v => props.setValue1(v)
                 }}
-                arcColor="#233750"
+                arcColor="#c5d6ed"
                 arcBackgroundColor="#233750"
             />
         </div>

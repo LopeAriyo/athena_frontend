@@ -3,6 +3,9 @@ import { Link } from "react-router-dom/";
 
 import SignUpForm from "../components/SignUpForm.js";
 
+//TODO - STRETCH
+//+ Add sign in with socials functionality
+
 const SignUp = ({ signUp, history }) => (
     <div className="SignUp">
         <div className="top-nav">

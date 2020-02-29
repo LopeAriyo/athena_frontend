@@ -1,10 +1,11 @@
 import React from "react";
 import CycleSlider from "../components/CycleSlider";
-import API from "../adapters/API";
 
 class CycleWheelContainer extends React.Component {
     state = {
         cycleStartDate: new Date(this.props.currentCycle.start_date),
+        cycleLength: this.props.currentCycle.cycle_length,
+        periodLength: this.props.currentCycle.period_length,
         estimatedCycleLength: this.props.currentCycle.estimated_cycle_length,
         estimatedPeriodLength: this.props.currentCycle.estimated_period_length,
         today: new Date(),
@@ -12,6 +13,14 @@ class CycleWheelContainer extends React.Component {
         periodArray: [],
         cycleDay: 1,
         dateMatch: true
+    };
+
+    setCycleLength = () => {
+        const date1 = this.state.today;
+        const date2 = this.state.cycleStartDate;
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        this.setState({ cycleLength: diffDays });
     };
 
     setCycleDay = cycleDay => {
@@ -149,6 +158,7 @@ class CycleWheelContainer extends React.Component {
     componentDidMount() {
         this.createCycle();
         this.createPeriod();
+        this.setCycleLength();
     }
 
     render() {
@@ -216,14 +226,44 @@ class CycleWheelContainer extends React.Component {
                                             days
                                         </p>
                                     ) : (
-                                        <p className="small-text dark-text">
-                                            Period starts tomorrow
-                                        </p>
+                                        <div>
+                                            {estimatedCycleLength -
+                                                Math.floor(cycleDay) >=
+                                            1 ? (
+                                                <p className="small-text dark-text">
+                                                    Period starts tomorrow
+                                                </p>
+                                            ) : (
+                                                <p className="small-text dark-text">
+                                                    Period starts today
+                                                </p>
+                                            )}
+                                        </div>
                                     )}{" "}
                                 </div>
                             )}
                         </div>
                     )}
+                </button>
+                <button
+                    className="light-btn small-btn"
+                    onClick={() =>
+                        this.props.patchCurrentCycle(
+                            this.state.cycleLength,
+                            this.state.estimatedCycleLength,
+                            this.state.estimatedPeriodLength
+                        )
+                    }
+                >
+                    End Cycle
+                </button>
+                <button
+                    className="light-btn small-btn"
+                    onClick={() =>
+                        this.props.deleteCycle(this.props.currentCycle.id)
+                    }
+                >
+                    Delete Cycle
                 </button>
             </div>
         );

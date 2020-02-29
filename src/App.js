@@ -26,13 +26,13 @@ class App extends React.Component {
         journals: []
     };
 
-    signUp = () => {
-        //Things go in here
-    };
-
     signIn = data => {
         this.setState({ user: data, userPending: false });
         localStorage.token = data.token;
+    };
+
+    signUp = () => {
+        this.setState({ userPending: false });
     };
 
     signOut = () => {
@@ -43,6 +43,49 @@ class App extends React.Component {
 
     getCycles = data => {
         this.setState({ cycles: data });
+    };
+
+    patchCurrentCycleThenCreate = (
+        updatedCycleLength,
+        estimatedCycleLength,
+        estimatedPeriodLength
+    ) => {
+        API.patchCurrentCycle({
+            active_cycle: false,
+            cycle_length: updatedCycleLength
+        });
+
+        this.createNewCycle(estimatedCycleLength, estimatedPeriodLength);
+    };
+
+    patchLastCycleThenUpdate = () => {
+        API.patchLastCycle({
+            active_cycle: true
+        }).then(data => {
+            if (data.error) throw Error(data.error);
+            this.setState({ currentCycle: data });
+        });
+    };
+
+    createNewCycle = (estimatedCycleLength, estimatedPeriodLength) => {
+        const newCycle = {
+            active_cycle: true,
+            estimated_cycle_length: estimatedCycleLength, // get this.state version of this
+            cycle_length: 1,
+            estimated_period_length: estimatedPeriodLength, // get this.state version of this
+            period_length: 1
+        };
+
+        API.postCycle(newCycle).then(data => {
+            if (data.error) throw Error(data.error);
+            this.setState({ currentCycle: data });
+        });
+    };
+
+    deleteCurrentCycleThenPatchLast = id => {
+        API.destroyCycle(id);
+
+        this.patchLastCycleThenUpdate();
     };
 
     getCurrentCycle = data => {
@@ -128,7 +171,14 @@ class App extends React.Component {
                                 {...props}
                                 user={this.state.user}
                                 getCurrentCycle={this.getCurrentCycle}
+                                createNewCycle={this.createNewCycle}
                                 currentCycle={this.state.currentCycle}
+                                patchCurrentCycleThenCreate={
+                                    this.patchCurrentCycleThenCreate
+                                }
+                                deleteCurrentCycleThenPatchLast={
+                                    this.deleteCurrentCycleThenPatchLast
+                                }
                                 journals={this.state.journals}
                                 estimatedCycleLength={28}
                             />

@@ -81,8 +81,8 @@ class SignUpForm extends React.Component {
         }
 
         const newUser = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
+            first_name: this.state.firstName,
+            last_name: this.state.lastName,
             email: this.state.email,
             password: this.state.password,
             passwordConfirmation: this.state.passwordConfirmation
@@ -91,8 +91,6 @@ class SignUpForm extends React.Component {
         API.signUp(newUser)
             .then(data => {
                 if (data.error) throw Error(data.error);
-                // this.props.signUp(data);
-                this.props.history.push("/signin");
             })
             .catch(error => alert(error));
         alert(`Signed Up`);

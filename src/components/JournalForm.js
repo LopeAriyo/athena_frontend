@@ -64,10 +64,9 @@ class JournalForm extends React.Component {
             <div className="modal">
                 <form onChange={this.handleChange}>
                     {this.props.journal.questions.map(this.question)}
-
+                    <br></br>
                     <button
                         className="light-btn normal-btn"
-                        // disabled={isDisabled}
                         onClick={this.handleSubmit}
                     >
                         <p className="normal-text dark-text">Submit</p>

@@ -7,7 +7,7 @@ class Profile extends React.Component {
         const { signOut } = this.props;
 
         return (
-            <div className="Page">
+            <main>
                 <h5 className="light-text">
                     {first_name} {last_name}
                 </h5>
@@ -20,7 +20,7 @@ class Profile extends React.Component {
                 <button onClick={signOut} className="dark-btn normal-btn">
                     <p className="normal-text light-text"> Sign Out</p>
                 </button>
-            </div>
+            </main>
         );
     }
 }

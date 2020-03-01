@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, withRouter, Switch } from "react-router-dom";
 
-import "./App.css";
+import "./css/App.css";
 
 import API from "./adapters/API";
 
@@ -15,7 +15,7 @@ import Cycle from "./pages/Cycle";
 // import Calendar from "./pages/Calendar";
 // import Insights from "./pages/Insights";
 
-import BottomNavigation from "./navigation/BottomNavigaton";
+import Navigation from "./navigation/Navigation";
 class App extends React.Component {
     state = {
         user: null,
@@ -135,6 +135,7 @@ class App extends React.Component {
         if (this.state.userPending) return <div>please wait</div>;
         return (
             <div className="App">
+                {this.state.user !== null && <Navigation />}
                 <Switch>
                     <Route
                         exact
@@ -195,7 +196,6 @@ class App extends React.Component {
                         )}
                     />
                 </Switch>
-                {this.state.user !== null && <BottomNavigation />}
             </div>
         );
     }

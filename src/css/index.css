@@ -1,91 +1,66 @@
-.App {
-    text-align: center;
-    background-color: #e6ebf5;
+:root {
+    font-size: 16px;
+    font-family: Montserrat;
+    --text-primary: #ffffff;
+    --text-secondary: #000000;
+    --bg-primary: #28415a;
+    --bg-secondary: #c5d6ed;
+    --transition-speed: 600ms;
+}
+
+.dark {
+    --text-primary: #b6b6b6;
+    --text-secondary: #ececec;
+    --bg-primary: #23232e;
+    --bg-secondary: #141418;
+}
+
+.light {
+    --text-primary: #1f1f1f;
+    --text-secondary: #000000;
+    --bg-primary: #ffffff;
+    --bg-secondary: #e4e4e4;
+}
+
+.solar {
+    --text-primary: #576e75;
+    --text-secondary: #35535c;
+    --bg-primary: #fdf6e3;
+    --bg-secondary: #f5e5b8;
+}
+
+.theme-icon {
+    display: none;
+}
+
+.dark #darkIcon {
+    display: block;
+}
+
+.light #lightIcon {
+    display: block;
+}
+
+.solar #solarIcon {
+    display: block;
+}
+
+body {
+    width: 100vw;
     height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.Page {
-    text-align: center;
-    background-color: #233750;
-    width: 100vw;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.Component {
-    text-align: center;
-    background-color: #28415a;
-    width: 100vw;
-    border-radius: 0px 0px 40px 40px;
-    position: relative;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center; */
-}
-
-.Journal {
-    width: 150px;
-    height: 225px;
-    background: linear-gradient(180deg, #c5d6ed 0%, #e6ebf5 100%);
-    border-radius: 20px;
-    margin: 10px 30px;
-    text-align: center;
-    /* letter-spacing: 3px; */
-    /* word-spacing: 5px; */
-    /* position: absolute;
-    transform-origin: center;
-    transform: translate(100px, 110px); */
-}
-
-.CycleInfoCircle {
-    width: 175px;
-    height: 175px;
-    background: linear-gradient(180deg, #c5d6ed 0%, #e6ebf5 100%);
-    border-radius: 50%;
-    text-align: center;
-    position: absolute;
-    top: calc(15%);
-    left: calc(43%);
-    margin-top: 10px;
-    margin-left: 30px;
-
-    /* transform: translate(-50%, -43%); */
-    /* letter-spacing: 3px; */
-    /* word-spacing: 5px; */
-    /* position: absolute;
-    transform-origin: center;
-    transform: translate(100px, 110px); */
-}
-
-.CycleInfoCircle h1 {
     margin: 0;
+    padding: 0;
 }
 
-.CycleInfoCircle p {
-    margin: 0;
+body::-webkit-scrollbar {
 }
 
-.CycleInfoCircle:disabled {
-    background: linear-gradient(180deg, #eeeeee 0%, #e6ebf5 100%);
+body::-webkit-scrollbar-track {
+    background: #233750;
 }
 
-.CycleInfoCircle:disabled h1 {
-    margin: 0;
-    color: #ffffff;
-}
-
-.CycleInfoCircle:disabled p {
-    margin: 0;
-    color: grey;
+body::-webkit-scrollbar-thumb {
+    background: #c5d6ed;
 }
 
 h1 {
@@ -175,14 +150,6 @@ caption {
     text-transform: uppercase;
 }
 
-.dark-text {
-    color: #28415a;
-}
-
-.light-text {
-    color: #c5d6ed;
-}
-
 .grey-text {
     color: #8e8e93;
 }
@@ -266,10 +233,4 @@ select {
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
     backdrop-filter: blur(40px);
-}
-
-.journal-cards {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 100vw;
 }

@@ -1,0 +1,61 @@
+.Journal {
+    width: 150px;
+    height: 225px;
+    background: linear-gradient(180deg, #c5d6ed 0%, #e6ebf5 100%);
+    border-radius: 20px;
+    margin: 10px 30px;
+    text-align: center;
+    /* letter-spacing: 3px; */
+    /* word-spacing: 5px; */
+    /* position: absolute;
+    transform-origin: center;
+    transform: translate(100px, 110px); */
+}
+
+.journal-cards {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100vw;
+}
+
+.CycleInfoCircle {
+    width: 175px;
+    height: 175px;
+    background: linear-gradient(180deg, #c5d6ed 0%, #e6ebf5 100%);
+    border-radius: 50%;
+    text-align: center;
+    position: absolute;
+    top: calc(15%);
+    left: calc(43%);
+    margin-top: 10px;
+    margin-left: 30px;
+
+    /* transform: translate(-50%, -43%); */
+    /* letter-spacing: 3px; */
+    /* word-spacing: 5px; */
+    /* position: absolute;
+    transform-origin: center;
+    transform: translate(100px, 110px); */
+}
+
+.CycleInfoCircle h1 {
+    margin: 0;
+}
+
+.CycleInfoCircle p {
+    margin: 0;
+}
+
+.CycleInfoCircle:disabled {
+    background: linear-gradient(180deg, #eeeeee 0%, #e6ebf5 100%);
+}
+
+.CycleInfoCircle:disabled h1 {
+    margin: 0;
+    color: #ffffff;
+}
+
+.CycleInfoCircle:disabled p {
+    margin: 0;
+    color: grey;
+}

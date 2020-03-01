@@ -32,7 +32,7 @@ class Home extends React.Component {
         const timeOfDay = this.getTimeOfDay(currentDateTime);
 
         return (
-            <div className="Page">
+            <main>
                 <h4 className="light-text"> Good {timeOfDay}, </h4>
                 <h4 className="white-text"> {first_name}</h4>
                 <h5 className="white-text">
@@ -43,7 +43,7 @@ class Home extends React.Component {
                         <Moment format="DD MMMM" />
                     </div>
                 </h5>
-            </div>
+            </main>
         );
     }
 }

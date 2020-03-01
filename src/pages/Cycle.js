@@ -1,5 +1,6 @@
 import React from "react";
-import TopNavigation from "../navigation/TopNavigation";
+
+import "../css/Cycle.css";
 
 import CycleWheelContainer from "../components/CycleWheelContainer";
 import JournalForm from "../components/JournalForm";
@@ -83,10 +84,10 @@ class Cycle extends React.Component {
 
     render() {
         return (
-            <div className="Page">
-                <TopNavigation pageName="Cycle" />
+            <main>
+                <h1> Cycle</h1>
 
-                <div className="Component">
+                <div>
                     <CycleWheelContainer
                         createNewCycle={this.props.createNewCycle}
                         patchCurrentCycle={
@@ -133,7 +134,7 @@ class Cycle extends React.Component {
                         <p className="small-text dark-text"> Hide</p>
                     )}
                 </button>
-            </div>
+            </main>
         );
     }
 }

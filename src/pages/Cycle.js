@@ -15,18 +15,9 @@ class Cycle extends React.Component {
     state = {
         entryFormVisible: false,
         cycleJournals: this.props.currentCycle.cycle_journals,
-        index: 0,
         addJournalFormVisible: false,
         journalsVisible: false,
         journalOptions: []
-    };
-
-    handleButtonClickForward = () => {
-        this.setState({ index: this.state.index + 3 });
-    };
-
-    handleButtonClickBackward = () => {
-        this.setState({ index: this.state.index - 3 });
     };
 
     getCycleJournalDetails = id => {
@@ -105,9 +96,7 @@ class Cycle extends React.Component {
     render() {
         return (
             <main>
-                <header>
-                    <caption> Cycle</caption>
-                </header>
+                <h5 className="white-text"> Cycle</h5>
 
                 <CycleWheelContainer
                     createNewCycle={this.props.createNewCycle}
@@ -116,32 +105,19 @@ class Cycle extends React.Component {
                     deleteCycle={this.props.deleteCurrentCycleThenPatchLast}
                 />
                 <br></br>
-
+                {this.state.journalsVisible ? (
+                    <div className="icon" onClick={this.toggleDisplayJournals}>
+                        <div>Hide Journals</div>
+                        <ChevronUp />
+                    </div>
+                ) : (
+                    <div className="icon" onClick={this.toggleDisplayJournals}>
+                        <div>Show Journals</div>
+                        <ChevronDown />
+                    </div>
+                )}
                 {this.state.journalsVisible && (
                     <div>
-                        <JournalsContainer
-                            onJournalCardClick={this.getCycleJournalDetails}
-                            handleButtonClickForward={this.handleButtonClickForward}
-                    handleButtonClickBackward={this.handleButtonClickBackward}
-                            deleteCycleJournal={this.deleteCycleJournal}
-                            cycle_journals={this.state.cycleJournals.slice(
-            this.state.index,
-            this.state.index + 3
-        )}
-                        />
-                        {this.state.entryFormVisible && (
-                            <EntryForm
-                                journal={this.state.cycleJournal}
-                                closeEntryForm={this.closeEntryForm}
-                            />
-                        )}
-                        {this.state.addJournalFormVisible && (
-                            <AddJournalForm
-                                updateCycleJournals={this.updateCycleJournals}
-                                getCurrentCycle={this.props.getCurrentCycle}
-                                journalOptions={this.state.journalOptions}
-                            />
-                        )}
                         <button
                             className="light-btn normal-btn"
                             onClick={this.toggleAddJournalForm}
@@ -152,25 +128,31 @@ class Cycle extends React.Component {
                                     Add a New Journal
                                 </p>
                             ) : (
-                                <p className="small-text dark-text"> Hide</p>
+                                <p className="small-text dark-text">
+                                    {" "}
+                                    Close Form
+                                </p>
                             )}
                         </button>
-                    </div>
-                )}
-                {this.state.journalsVisible ? (
-                    <div className="icon">
-                        <ChevronUp  onClick={this.toggleDisplayJournals}/>
-                        <span className="link-text logo-text">
-                            Hide Journals
-                        </span>
-                        
-                    </div>
-                ) : (
-                    <div className="icon">
-                        <span className="link-text logo-text">
-                            Show Journals
-                        </span>
-                        <ChevronDown  onClick={this.toggleDisplayJournals}/>
+                        {this.state.addJournalFormVisible && (
+                            <AddJournalForm
+                                updateCycleJournals={this.updateCycleJournals}
+                                getCurrentCycle={this.props.getCurrentCycle}
+                                journalOptions={this.state.journalOptions}
+                            />
+                        )}
+
+                        <JournalsContainer
+                            onJournalCardClick={this.getCycleJournalDetails}
+                            deleteCycleJournal={this.deleteCycleJournal}
+                            cycle_journals={this.state.cycleJournals}
+                        />
+                        {this.state.entryFormVisible && (
+                            <EntryForm
+                                journal={this.state.cycleJournal}
+                                closeEntryForm={this.closeEntryForm}
+                            />
+                        )}
                     </div>
                 )}
             </main>

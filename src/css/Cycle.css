@@ -2,6 +2,13 @@
     display: grid;
 }
 
+.cycle-nav {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 10px;
+}
+
 .cycle-button {
     width: 175px;
     height: 175px;

@@ -1,5 +1,6 @@
 import React from "react";
 import API from "../adapters/API";
+import { ReactComponent as Plus } from "../assets/icons/Plus.svg";
 
 class AddJournalForm extends React.Component {
     state = {
@@ -14,9 +15,14 @@ class AddJournalForm extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        API.postCycleJournal(this.state.journal_id).then(data =>
-            this.props.updateCycleJournals(data)
-        );
+        if (this.state.journal_id === "" || this.state.journal_id === null) {
+            alert("Please Choose An Option");
+            return;
+        } else {
+            API.postCycleJournal(this.state.journal_id).then(data =>
+                this.props.updateCycleJournals(data)
+            );
+        }
     };
 
     render() {
@@ -24,6 +30,7 @@ class AddJournalForm extends React.Component {
             <div>
                 <form className="add-journal-form">
                     <select id="journals" onChange={this.handleChange}>
+                        <option value="">Please choose an option</option>
                         {this.props.journalOptions.map(journal => (
                             <option key={journal.id} value={journal.id}>
                                 {" "}
@@ -31,9 +38,10 @@ class AddJournalForm extends React.Component {
                             </option>
                         ))}
                     </select>
-                    <button type="submit" onClick={this.handleSubmit}>
-                        Add
-                    </button>
+
+                    <div>
+                        <Plus onClick={this.handleSubmit} />
+                    </div>
                 </form>
             </div>
         );

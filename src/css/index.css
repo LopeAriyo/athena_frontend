@@ -1,3 +1,10 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #28415a;
+}
 :root {
     font-size: 16px;
     font-family: Montserrat;
@@ -27,14 +34,6 @@
     --text-secondary: #35535c;
     --bg-primary: #fdf6e3;
     --bg-secondary: #f5e5b8;
-}
-
-body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-primary);
 }
 
 .theme-icon {

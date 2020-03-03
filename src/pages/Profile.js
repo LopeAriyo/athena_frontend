@@ -8,7 +8,7 @@ class Profile extends React.Component {
 
         return (
             <main>
-            <caption> Profile</caption>
+                <h5 className="white-text"> Profile</h5>
                 <h5 className="light-text">
                     {first_name} {last_name}
                 </h5>

@@ -1,6 +1,10 @@
 import React from "react";
 import CycleSlider from "../components/CycleSlider";
 
+import { ReactComponent as AddCycle } from "../assets/icons/AddCycle.svg";
+import { ReactComponent as AddPeriod } from "../assets/icons/AddPeriod.svg";
+import { ReactComponent as DeleteCycle } from "../assets/icons/DeleteCycle.svg";
+import { ReactComponent as DeletePeriod } from "../assets/icons/DeletePeriod.svg";
 class CycleWheelContainer extends React.Component {
     state = {
         cycleStartDate: new Date(this.props.currentCycle.start_date),
@@ -250,26 +254,35 @@ class CycleWheelContainer extends React.Component {
                         )}
                     </button>
                 </div>
-                <button
-                    className="light-btn small-btn"
-                    onClick={() =>
-                        this.props.patchCurrentCycle(
-                            this.state.cycleLength,
-                            this.state.estimatedCycleLength,
-                            this.state.estimatedPeriodLength
-                        )
-                    }
-                >
-                    End Cycle
-                </button>
-                <button
-                    className="light-btn small-btn"
-                    onClick={() =>
-                        this.props.deleteCycle(this.props.currentCycle.id)
-                    }
-                >
-                    Delete Cycle
-                </button>
+                <div className="cycle-nav">
+                    <div>
+                        {" "}
+                        <AddPeriod />{" "}
+                    </div>
+                    <div>
+                        <AddCycle
+                            onClick={() =>
+                                this.props.patchCurrentCycle(
+                                    this.state.cycleLength,
+                                    this.state.estimatedCycleLength,
+                                    this.state.estimatedPeriodLength
+                                )
+                            }
+                        />
+                    </div>
+                    <div>
+                        <DeletePeriod />
+                    </div>
+                    <div>
+                        <DeleteCycle
+                            onClick={() =>
+                                this.props.deleteCycle(
+                                    this.props.currentCycle.id
+                                )
+                            }
+                        />
+                    </div>
+                </div>
             </div>
         );
     }

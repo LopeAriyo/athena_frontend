@@ -1,5 +1,6 @@
 import React from "react";
 import "./modal.scss";
+import { ReactComponent as Cross } from "../assets/icons/Cross.svg";
 import API from "../adapters/API";
 class EntryForm extends React.Component {
     state = {
@@ -26,22 +27,6 @@ class EntryForm extends React.Component {
             }
         });
     };
-    question = question => {
-        return (
-            <>
-                <h5 className="white-text">{question.prompt}</h5>
-                <select
-                    name={question.id}
-                    value={this.state.formData[question.id]}
-                >
-                    <option value="">Please choose an option</option>
-                    {question.options.map(op => (
-                        <option value={op.id}>{op.answer}</option>
-                    ))}
-                </select>
-            </>
-        );
-    };
 
     handleSubmit = event => {
         event.preventDefault();
@@ -59,12 +44,48 @@ class EntryForm extends React.Component {
         this.setState({ formData: {} });
     };
 
+    question = question => {
+        return (
+            <>
+                <p className="white-text large-text">{question.prompt}</p>
+                {/* {question.question_type === "range" && ( */}
+                {/* <div className="range-input">
+                        <input
+                            type="range"
+                            min="1"
+                            max={question.options.length}
+                            value={this.state.formData[question.id]}
+                            className="slider"
+                        />
+                    </div> */}
+                {/* )} */}
+                {/* {question.question_type === "select" && ( */}
+                <select
+                    name={question.id}
+                    value={this.state.formData[question.id]}
+                    key={question.id}
+                >
+                    <option value="">Please choose an option</option>
+                    {question.options.map(op => (
+                        <option value={op.id} key={op.id}>
+                            {op.answer}
+                        </option>
+                    ))}
+                </select>
+                {/* )} */}
+            </>
+        );
+    };
+
     render() {
         return (
             <div className="modal">
+                <div className="close-button">
+                    <Cross onClick={event => this.props.closeEntryForm()} />
+                </div>
                 <form onChange={this.handleChange}>
                     {this.props.journal.questions.map(this.question)}
-                    <br></br>
+
                     <button
                         className="light-btn normal-btn"
                         onClick={this.handleSubmit}
@@ -72,9 +93,6 @@ class EntryForm extends React.Component {
                         <p className="normal-text dark-text">Submit</p>
                     </button>
                 </form>
-                <button onClick={event => this.props.closeEntryForm()}>
-                    Close Form
-                </button>
             </div>
         );
     }

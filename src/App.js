@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, withRouter, Switch } from "react-router-dom";
+import { Spinner } from "reactstrap";
 
 import "./css/App.css";
 
@@ -19,7 +20,7 @@ import Navigation from "./navigation/Navigation";
 class App extends React.Component {
     state = {
         user: null,
-        userPending: false,   
+        userPending: false,
         cycles: [],
         currentCycle: [],
         today: new Date(),
@@ -132,7 +133,6 @@ class App extends React.Component {
     }
 
     render() {
-        if (this.state.userPending) return <div>please wait</div>;
         return (
             <div className="App">
                 {this.state.user !== null && <Navigation />}
@@ -141,17 +141,6 @@ class App extends React.Component {
                         exact
                         path="/"
                         component={props => <Welcome {...props} />}
-                    />
-                    <Route
-                        exact
-                        path="/home"
-                        component={props => (
-                            <Home
-                                {...props}
-                                // signOut={this.signOut}
-                                user={this.state.user}
-                            />
-                        )}
                     />
                     <Route
                         path="/signup"
@@ -165,36 +154,60 @@ class App extends React.Component {
                             <SignIn {...props} signIn={this.signIn} />
                         )}
                     />
-                    <Route
-                        path="/cycle"
-                        component={props => (
-                            <Cycle
-                                {...props}
-                                user={this.state.user}
-                                getCurrentCycle={this.getCurrentCycle}
-                                createNewCycle={this.createNewCycle}
-                                currentCycle={this.state.currentCycle}
-                                patchCurrentCycleThenCreate={
-                                    this.patchCurrentCycleThenCreate
-                                }
-                                deleteCurrentCycleThenPatchLast={
-                                    this.deleteCurrentCycleThenPatchLast
-                                }
-                                journals={this.state.journals}
-                                estimatedCycleLength={28}
+
+                    {this.state.userPending ? (
+                        <div>
+                            <Spinner type="grow" color="primary" />
+                            <Spinner type="grow" color="secondary" />
+                            <Spinner type="grow" color="success" />
+                            <div>Content Loading</div>
+                        </div>
+                    ) : (
+                        <main className="test">
+                            <Route
+                                exact
+                                path="/home"
+                                component={props => (
+                                    <Home
+                                        {...props}
+                                        // signOut={this.signOut}
+                                        user={this.state.user}
+                                    />
+                                )}
                             />
-                        )}
-                    />
-                    <Route
-                        path="/profile"
-                        component={props => (
-                            <Profile
-                                {...props}
-                                user={this.state.user}
-                                signOut={this.signOut}
+
+                            <Route
+                                path="/cycle"
+                                component={props => (
+                                    <Cycle
+                                        {...props}
+                                        user={this.state.user}
+                                        getCurrentCycle={this.getCurrentCycle}
+                                        createNewCycle={this.createNewCycle}
+                                        currentCycle={this.state.currentCycle}
+                                        patchCurrentCycleThenCreate={
+                                            this.patchCurrentCycleThenCreate
+                                        }
+                                        deleteCurrentCycleThenPatchLast={
+                                            this.deleteCurrentCycleThenPatchLast
+                                        }
+                                        journals={this.state.journals}
+                                        estimatedCycleLength={28}
+                                    />
+                                )}
                             />
-                        )}
-                    />
+                            <Route
+                                path="/profile"
+                                component={props => (
+                                    <Profile
+                                        {...props}
+                                        user={this.state.user}
+                                        signOut={this.signOut}
+                                    />
+                                )}
+                            />
+                        </main>
+                    )}
                 </Switch>
             </div>
         );

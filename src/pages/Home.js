@@ -33,6 +33,7 @@ class Home extends React.Component {
 
         return (
             <main>
+            <caption> Home</caption>
                 <h4 className="light-text"> Good {timeOfDay}, </h4>
                 <h4 className="white-text"> {first_name}</h4>
                 <h5 className="white-text">

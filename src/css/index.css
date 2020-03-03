@@ -29,6 +29,14 @@
     --bg-secondary: #f5e5b8;
 }
 
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-primary);
+}
+
 .theme-icon {
     display: none;
 }
@@ -43,24 +51,6 @@
 
 .solar #solarIcon {
     display: block;
-}
-
-body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-}
-
-body::-webkit-scrollbar {
-}
-
-body::-webkit-scrollbar-track {
-    background: #233750;
-}
-
-body::-webkit-scrollbar-thumb {
-    background: #c5d6ed;
 }
 
 h1 {
@@ -144,7 +134,7 @@ p {
 caption {
     font-family: Montserrat;
     font-style: normal;
-    font-weight: normal;
+    font-weight: semibold;
     font-size: 18px;
     line-height: 22px;
     text-transform: uppercase;

@@ -19,7 +19,7 @@ import Navigation from "./navigation/Navigation";
 class App extends React.Component {
     state = {
         user: null,
-        userPending: true,
+        userPending: false,   
         cycles: [],
         currentCycle: [],
         today: new Date(),

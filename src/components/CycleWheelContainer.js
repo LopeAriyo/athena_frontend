@@ -174,77 +174,82 @@ class CycleWheelContainer extends React.Component {
 
         return (
             <div>
-                <CycleSlider
-                    value1={cycleDay}
-                    setValue1={this.setCycleDay}
-                    cycleLength={this.state.estimatedCycleLength}
-                />
-
-                <button
-                    className="CycleInfoCircle"
-                    disabled={!doesDateMatch(cycleDay, cycleArray)}
-                >
-                    <p className="white-text">Day</p>
-                    <h1 className="dark-text">{Math.floor(cycleDay)}</h1>
-                    {isOnPeriod(cycleDay, periodArray, cycleArray) === true ? (
-                        <div>
-                            {estimatedPeriodLength - Math.floor(cycleDay) >
-                            1 ? (
-                                <p className="small-text dark-text">
-                                    Period ends in
-                                    {" " +
-                                        (estimatedPeriodLength -
-                                            Math.floor(cycleDay)) +
-                                        " "}
-                                    days
-                                </p>
-                            ) : (
-                                <p className="small-text dark-text">
-                                    {" "}
-                                    Period ends tomorrow!{" "}
-                                </p>
-                            )}
-                        </div>
-                    ) : (
-                        <div>
-                            {estimatedPeriodLength - Math.floor(cycleDay) ===
-                            0 ? (
-                                <p className="small-text dark-text">
-                                    {" "}
-                                    Period ends today!{" "}
-                                </p>
-                            ) : (
-                                <div>
-                                    {estimatedCycleLength -
-                                        Math.floor(cycleDay) >=
-                                    2 ? (
-                                        <p className="small-text dark-text">
-                                            {" "}
-                                            Period starts in{" "}
-                                            {estimatedCycleLength +
-                                                -Math.floor(cycleDay)}{" "}
-                                            days
-                                        </p>
-                                    ) : (
-                                        <div>
-                                            {estimatedCycleLength -
-                                                Math.floor(cycleDay) >=
-                                            1 ? (
-                                                <p className="small-text dark-text">
-                                                    Period starts tomorrow
-                                                </p>
-                                            ) : (
-                                                <p className="small-text dark-text">
-                                                    Period starts today
-                                                </p>
-                                            )}
-                                        </div>
-                                    )}{" "}
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </button>
+                <div className="cycle-area">
+                    <div className="cycle-wheel">
+                        <CycleSlider
+                            value1={cycleDay}
+                            setValue1={this.setCycleDay}
+                            cycleLength={this.state.estimatedCycleLength}
+                        />
+                    </div>
+                    <button
+                        className="cycle-button"
+                        disabled={!doesDateMatch(cycleDay, cycleArray)}
+                    >
+                        <p className="white-text">Day</p>
+                        <h1 className="dark-text">{Math.floor(cycleDay)}</h1>
+                        {isOnPeriod(cycleDay, periodArray, cycleArray) ===
+                        true ? (
+                            <div>
+                                {estimatedPeriodLength - Math.floor(cycleDay) >
+                                1 ? (
+                                    <p className="small-text dark-text">
+                                        Period ends in
+                                        {" " +
+                                            (estimatedPeriodLength -
+                                                Math.floor(cycleDay)) +
+                                            " "}
+                                        days
+                                    </p>
+                                ) : (
+                                    <p className="small-text dark-text">
+                                        {" "}
+                                        Period ends tomorrow!{" "}
+                                    </p>
+                                )}
+                            </div>
+                        ) : (
+                            <div>
+                                {estimatedPeriodLength -
+                                    Math.floor(cycleDay) ===
+                                0 ? (
+                                    <p className="small-text dark-text">
+                                        {" "}
+                                        Period ends today!{" "}
+                                    </p>
+                                ) : (
+                                    <div>
+                                        {estimatedCycleLength -
+                                            Math.floor(cycleDay) >=
+                                        2 ? (
+                                            <p className="small-text dark-text">
+                                                {" "}
+                                                Period starts in{" "}
+                                                {estimatedCycleLength +
+                                                    -Math.floor(cycleDay)}{" "}
+                                                days
+                                            </p>
+                                        ) : (
+                                            <div>
+                                                {estimatedCycleLength -
+                                                    Math.floor(cycleDay) >=
+                                                1 ? (
+                                                    <p className="small-text dark-text">
+                                                        Period starts tomorrow
+                                                    </p>
+                                                ) : (
+                                                    <p className="small-text dark-text">
+                                                        Period starts today
+                                                    </p>
+                                                )}
+                                            </div>
+                                        )}{" "}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </button>
+                </div>
                 <button
                     className="light-btn small-btn"
                     onClick={() =>

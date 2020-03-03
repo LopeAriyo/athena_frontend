@@ -1,7 +1,7 @@
 import React from "react";
 import "./modal.scss";
 import API from "../adapters/API";
-class JournalForm extends React.Component {
+class EntryForm extends React.Component {
     state = {
         formData: {}
     };
@@ -47,12 +47,12 @@ class JournalForm extends React.Component {
         event.preventDefault();
         if (this.state.patch) {
             API.patchEntry(this.state.entryId, this.state.formData).then(() => {
-                this.props.closeJournalForm();
+                this.props.closeEntryForm();
             });
         } else {
             API.postEntry(this.props.journal.id, this.state.formData).then(
                 () => {
-                    this.props.closeJournalForm();
+                    this.props.closeEntryForm();
                 }
             );
         }
@@ -72,7 +72,7 @@ class JournalForm extends React.Component {
                         <p className="normal-text dark-text">Submit</p>
                     </button>
                 </form>
-                <button onClick={event => this.props.closeJournalForm()}>
+                <button onClick={event => this.props.closeEntryForm()}>
                     Close Form
                 </button>
             </div>
@@ -80,4 +80,4 @@ class JournalForm extends React.Component {
     }
 }
 
-export default JournalForm;
+export default EntryForm;

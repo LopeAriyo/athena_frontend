@@ -1,37 +1,58 @@
 import React from "react";
 import JournalCard from "./JournalCard";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
-//TODO
-//+ Add Toggle New Journal Select
-//+ When New cycle Journal is added, automatically call journal form so it can persist to the back end
-//+ If cycle journal already exists then alert the user and return
-//+ Add a delete button to each cycle journal and create a delete cycle journal function
 
 const JournalsContainer = ({
+    handleButtonClickForward, 
+    handleButtonClickBackward,
     onJournalCardClick,
     deleteCycleJournal,
     cycle_journals = []
 }) => {
+
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+        }
+    };
+
     return (
-        <div>
-            <div className="journal-cards">
+        <div >
+             
+                {/* <div className="journal-slider"> */}
+                <Carousel responsive={responsive}>
+                
+            
                 {cycle_journals.map(journal => (
-                    <div key={journal.id}>
+                    <div key={journal.id} >
                         <JournalCard
+                        key={journal.id}
                             onClick={() => onJournalCardClick(journal.id)}
                             journal={journal}
+                            icon={journal.category}
+                            handleDelete={deleteCycleJournal}
                         />
-                        {journal.category !== "Period" && (
-                            <button
-                                className="dark-btn small-btn"
-                                onClick={() => deleteCycleJournal(journal)}
-                            >
-                                <p className="small-text light-text"> Delete</p>
-                            </button>
-                        )}
                     </div>
                 ))}
-            </div>
+                </Carousel>
+                {/* </div> */}
+                
         </div>
     );
 };

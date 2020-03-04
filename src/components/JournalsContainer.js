@@ -44,7 +44,6 @@ const JournalsContainer = ({
                             key={journal.id}
                             onClick={() => onJournalCardClick(journal.id)}
                             journal={journal}
-                            icon={journal.category}
                             handleDelete={deleteCycleJournal}
                         />
                     </div>

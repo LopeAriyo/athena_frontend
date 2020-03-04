@@ -27,6 +27,27 @@ class CycleWheelContainer extends React.Component {
         this.setState({ cycleLength: diffDays });
     };
 
+    increasePeriodLength = () => {
+        const date1 = this.state.today;
+        const date2 = this.state.cycleStartDate;
+
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        console.log(`The difference in daysis ${diffDays}`);
+        // this.setState({ periodLength: diffDays });
+        this.props.patchPeriod(diffDays);
+    };
+
+    decreasePeriodLength = () => {
+        const date1 = this.state.today;
+        const date2 = this.state.cycleStartDate;
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const decreasedLength = diffDays - 1;
+        // this.setState({ periodLength: decreasedLength });
+        this.props.patchPeriod(diffDays);
+    };
+
     setCycleDay = cycleDay => {
         this.setState({
             cycleDay
@@ -257,7 +278,9 @@ class CycleWheelContainer extends React.Component {
                 <div className="cycle-nav">
                     <div>
                         {" "}
-                        <AddPeriod />{" "}
+                        <AddPeriod
+                            onClick={() => this.increasePeriodLength()}
+                        />{" "}
                     </div>
                     <div>
                         <AddCycle
@@ -271,7 +294,9 @@ class CycleWheelContainer extends React.Component {
                         />
                     </div>
                     <div>
-                        <DeletePeriod />
+                        <DeletePeriod
+                            onClick={() => this.decreasePeriodLength()}
+                        />
                     </div>
                     <div>
                         <DeleteCycle

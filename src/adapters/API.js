@@ -94,13 +94,14 @@ const currentCycle = () => get(currentCycleURL);
 //     patch(cyclesURL, id, periodLength);
 
 const patchCurrentCycle = cycleInfo =>
-    patch(cyclesURL, "/current", {
-        active_cycle: cycleInfo.active_cycle,
-        cycle_length: cycleInfo.cycle_length
+    patch(cyclesURL, "current", {
+        ...cycleInfo
+        // active_cycle: cycleInfo.active_cycle,
+        // cycle_length: cycleInfo.cycle_length
     });
 
 const patchLastCycle = cycleInfo =>
-    patch(cyclesURL, "/last", {
+    patch(cyclesURL, "last", {
         active_cycle: cycleInfo.active_cycle
     });
 

@@ -42,8 +42,33 @@ class App extends React.Component {
         this.props.history.push("/");
     };
 
+    createNewCycle = (estimatedCycleLength, estimatedPeriodLength) => {
+        const newCycle = {
+            active_cycle: true,
+            estimated_cycle_length: estimatedCycleLength, // get this.state version of this
+            cycle_length: 1,
+            estimated_period_length: estimatedPeriodLength, // get this.state version of this
+            period_length: 1
+        };
+
+        API.postCycle(newCycle).then(data => {
+            if (data.error) throw Error(data.error);
+            this.setState({ currentCycle: data });
+        });
+    };
+
     getCycles = data => {
         this.setState({ cycles: data });
+    };
+
+    getCurrentCycle = data => {
+        this.setState({ currentCycle: data });
+    };
+
+    patchPeriodInCurrentCycle = updatedPeriodLength => {
+        API.patchCurrentCycle({
+            period_length: updatedPeriodLength
+        });
     };
 
     patchCurrentCycleThenCreate = (
@@ -68,29 +93,29 @@ class App extends React.Component {
         });
     };
 
-    createNewCycle = (estimatedCycleLength, estimatedPeriodLength) => {
-        const newCycle = {
-            active_cycle: true,
-            estimated_cycle_length: estimatedCycleLength, // get this.state version of this
-            cycle_length: 1,
-            estimated_period_length: estimatedPeriodLength, // get this.state version of this
-            period_length: 1
-        };
+    deletePeriodInCurrentCycle = updatedPeriodLength => {
+        let deletePeriod = window.confirm(
+            `Are you sure you want to delete today's period entry?`
+        );
 
-        API.postCycle(newCycle).then(data => {
-            if (data.error) throw Error(data.error);
-            this.setState({ currentCycle: data });
-        });
+        if (deletePeriod !== true) {
+            return;
+        } else {
+            this.patchPeriodInCurrentCycle(updatedPeriodLength);
+        }
     };
 
     deleteCurrentCycleThenPatchLast = id => {
-        API.destroyCycle(id);
+        let deleteCycle = window.confirm(
+            `Are you sure you want to delete your current cycle?`
+        );
 
-        this.patchLastCycleThenUpdate();
-    };
-
-    getCurrentCycle = data => {
-        this.setState({ currentCycle: data });
+        if (deleteCycle !== true) {
+            return;
+        } else {
+            API.destroyCycle(id);
+            this.patchLastCycleThenUpdate();
+        }
     };
 
     getJournals = data => {
@@ -163,7 +188,7 @@ class App extends React.Component {
                             <div>Content Loading</div>
                         </div>
                     ) : (
-                        <main className="test">
+                        <main className="routes">
                             <Route
                                 exact
                                 path="/home"
@@ -185,8 +210,14 @@ class App extends React.Component {
                                         getCurrentCycle={this.getCurrentCycle}
                                         createNewCycle={this.createNewCycle}
                                         currentCycle={this.state.currentCycle}
+                                        patchPeriod={
+                                            this.patchPeriodInCurrentCycle
+                                        }
                                         patchCurrentCycleThenCreate={
                                             this.patchCurrentCycleThenCreate
+                                        }
+                                        deletePeriod={
+                                            this.deletePeriodInCurrentCycle
                                         }
                                         deleteCurrentCycleThenPatchLast={
                                             this.deleteCurrentCycleThenPatchLast

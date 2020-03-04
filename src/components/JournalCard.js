@@ -21,10 +21,10 @@ class JournalCard extends React.Component {
                         }
                     />
                 </div>
-                <div className="journal-body" onClick={this.props.onClick}>
-                    {" "}
-                    {/* <Icon icon={this.props.journal.category} /> */}
-                </div>
+                <div
+                    className="journal-body"
+                    onClick={this.props.onClick}
+                ></div>
             </div>
         );
     }

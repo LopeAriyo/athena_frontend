@@ -20,32 +20,32 @@ const Navigation = props => (
             </li>
             <li className="nav-item">
                 <NavLink to="/cycle" className="nav-link">
-                <Cycle/>
+                    <Cycle />
                     <span className="link-text">Cycle</span>
                 </NavLink>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <NavLink to="/calendar" className="nav-link">
                 <Calendar /> 
                     <span className="link-text">Calendar</span>
                 </NavLink>
-            </li>
+            </li> */}
 
             <li className="nav-item">
                 <NavLink to="/home" className="nav-link">
-                <Home /> 
-                    
+                    <Home />
+
                     <span className="link-text">Home</span>
                 </NavLink>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <NavLink to="/insights" className="nav-link">
                     <Insights />
                     <span className="link-text">Insights</span>
                 </NavLink>
-            </li>
+            </li> */}
 
             <li className="nav-item">
                 <NavLink to="/profile" className="nav-link">

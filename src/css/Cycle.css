@@ -103,3 +103,12 @@
         grid-row: 2;
     }
 }
+
+/* Extra Large screens */
+@media only screen and (min-width: 1200px) {
+    .cycle-button {
+        grid-column: 2;
+        grid-row: 2;
+        transform: translate(47%, 36%);
+    }
+}

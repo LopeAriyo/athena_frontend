@@ -100,6 +100,8 @@ class Cycle extends React.Component {
 
                 <CycleWheelContainer
                     createNewCycle={this.props.createNewCycle}
+                    patchPeriod={this.props.patchPeriod}
+                    deletePeriod={this.props.deletePeriod}
                     patchCurrentCycle={this.props.patchCurrentCycleThenCreate}
                     currentCycle={this.props.currentCycle}
                     deleteCycle={this.props.deleteCurrentCycleThenPatchLast}

@@ -24,7 +24,9 @@ class CycleWheelContainer extends React.Component {
         const date2 = this.state.cycleStartDate;
         const diffTime = Math.abs(date2 - date1);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        this.setState({ cycleLength: diffDays });
+        return new Promise(resolve =>
+            this.setState({ cycleLength: diffDays }, resolve)
+        );
     };
 
     increasePeriodLength = () => {
@@ -33,7 +35,6 @@ class CycleWheelContainer extends React.Component {
 
         const diffTime = Math.abs(date2 - date1);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        console.log(`The difference in daysis ${diffDays}`);
         // this.setState({ periodLength: diffDays });
         this.props.patchPeriod(diffDays);
     };
@@ -45,7 +46,7 @@ class CycleWheelContainer extends React.Component {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         const decreasedLength = diffDays - 1;
         // this.setState({ periodLength: decreasedLength });
-        this.props.patchPeriod(diffDays);
+        this.props.patchPeriod(decreasedLength);
     };
 
     setCycleDay = cycleDay => {
@@ -56,8 +57,12 @@ class CycleWheelContainer extends React.Component {
 
     createCycle = () => {
         const cycle = [];
+        const length =
+            this.state.estimatedCycleLength > this.state.cycleLength
+                ? this.state.estimatedCycleLength
+                : this.state.cycleLength;
 
-        for (let i = 0; i < this.state.estimatedCycleLength; i++) {
+        for (let i = 0; i < length; i++) {
             this.state.cycleStartDate.setDate(
                 this.state.cycleStartDate.getDate() + i
                 // i represents a number of days and adds that to the original day
@@ -85,7 +90,9 @@ class CycleWheelContainer extends React.Component {
                 // resets the date back to the original day
             );
         }
-        this.setState({ cycleArray: cycle }, () => this.findCycleDay());
+        return new Promise(resolve =>
+            this.setState({ cycleArray: cycle }, resolve)
+        );
     };
 
     createPeriod = () => {
@@ -175,15 +182,21 @@ class CycleWheelContainer extends React.Component {
     };
 
     findCycleDay = () => {
-        this.setState({
-            cycleDay: this.state.cycleArray.findIndex(this.isToday) + 1 //because of array
-        });
+        return new Promise(resolve =>
+            this.setState(
+                {
+                    cycleDay: this.state.cycleArray.findIndex(this.isToday) + 1 //because of array
+                },
+                resolve
+            )
+        );
     };
 
     componentDidMount() {
-        this.createCycle();
-        this.createPeriod();
-        this.setCycleLength();
+        this.setCycleLength()
+            .then(() => this.createCycle())
+            .then(() => this.findCycleDay())
+            .then(() => this.createPeriod());
     }
 
     render() {
@@ -194,6 +207,9 @@ class CycleWheelContainer extends React.Component {
             periodArray,
             cycleArray
         } = this.state;
+        console.log("cyclearray", cycleArray, cycleDay);
+
+        if (cycleArray.length === 0) return null;
 
         const { isOnPeriod, doesDateMatch } = this;
 

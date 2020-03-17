@@ -22,10 +22,25 @@ class EntryForm extends React.Component {
     }
 
     handleChange = event => {
+        const isCheckbox = event.target.type === "checkbox";
+        const value = isCheckbox
+            ? parseInt(event.target.value)
+            : event.target.value;
+        if (isCheckbox) {
+            this.setState({
+                formData: {
+                    ...this.state.formData,
+                    [event.target.name]: this.state.formData[event.target.name]
+                        ? [...this.state.formData[event.target.name], value]
+                        : [value]
+                }
+            });
+            return;
+        }
         this.setState({
             formData: {
                 ...this.state.formData,
-                [event.target.name]: event.target.value
+                [event.target.name]: value
             }
         });
     };
@@ -86,7 +101,14 @@ class EntryForm extends React.Component {
                                     name={question.id}
                                     key={question.id}
                                     type="checkbox"
-                                    value={this.state.formData[question.id]}
+                                    value={op.id}
+                                    checked={
+                                        this.state.formData[question.id]
+                                            ? this.state.formData[
+                                                  question.id
+                                              ].includes(op.id)
+                                            : false
+                                    }
                                     className="option-input"
                                 />
                                 <p key={op.id}>{op.answer}</p>

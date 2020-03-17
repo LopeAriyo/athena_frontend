@@ -113,8 +113,7 @@ class App extends React.Component {
         if (deleteCycle !== true) {
             return;
         } else {
-            API.destroyCycle(id);
-            this.patchLastCycleThenUpdate();
+            API.destroyCycle(id).then(() => this.patchLastCycleThenUpdate());
         }
     };
 

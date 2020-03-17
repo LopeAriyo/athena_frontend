@@ -102,7 +102,7 @@ const patchCurrentCycle = cycleInfo =>
 
 const patchLastCycle = cycleInfo =>
     patch(cyclesURL, "last", {
-        active_cycle: cycleInfo.active_cycle
+        ...cycleInfo
     });
 
 // const patchAnyCycle = periodLength =>

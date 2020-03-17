@@ -40,7 +40,7 @@ class SignInForm extends React.Component {
             .then(data => {
                 if (data.error) throw Error(data.error);
                 this.props.signIn(data);
-                this.props.history.push("/home");
+                this.props.history.push("/cycle");
             })
             .catch(error => alert(error));
     };
@@ -83,12 +83,13 @@ class SignInForm extends React.Component {
                         onChange={handleChange}
                     />
                     {/* <p> Forgot Password? </p> */}
+                    <br />
                     <button
-                        className="dark-btn normal-btn"
+                        className="light-btn normal-btn"
                         disabled={isDisabled}
                         onClick={handleSubmit}
                     >
-                        <p className="light-text">Sign In</p>
+                        <p className="dark-text small-text">Sign In</p>
                     </button>
                 </form>
             </div>

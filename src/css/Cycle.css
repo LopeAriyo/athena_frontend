@@ -7,6 +7,7 @@
     grid-gap: 10px;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 10px;
+    cursor: pointer;
 }
 
 .cycle-button {
@@ -51,6 +52,15 @@
     color: grey;
 }
 
+.center {
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column-reverse;
+}
+.icon {
+    width: 40px;
+}
 .icon svg {
     transform: rotate(0deg);
     transition: var(--transition-speed);
@@ -105,10 +115,10 @@
 }
 
 /* Extra Large screens */
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1400px) {
     .cycle-button {
         grid-column: 2;
         grid-row: 2;
-        transform: translate(47%, 36%);
+        transform: translate(46%, 36%);
     }
 }

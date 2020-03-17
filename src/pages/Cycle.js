@@ -1,10 +1,8 @@
 import React from "react";
+import Moment from "react-moment";
 
 import "../css/Cycle.css";
 import "../css/Journal.css";
-
-import { ReactComponent as ChevronDown } from "../assets/icons/ChevronDown.svg";
-import { ReactComponent as ChevronUp } from "../assets/icons/ChevronUp.svg";
 
 import CycleWheelContainer from "../components/CycleWheelContainer";
 import EntryForm from "../components/EntryForm";
@@ -17,8 +15,60 @@ class Cycle extends React.Component {
         cycleJournals: this.props.currentCycle.cycle_journals,
         addJournalFormVisible: false,
         journalsVisible: false,
-        journalOptions: []
+        journalOptions: [],
+        journal_id: null
     };
+
+    handleSubmit = event => {
+        event.preventDefault();
+        if (this.state.journal_id === "" || this.state.journal_id === null) {
+            alert("Please Choose An Option");
+            return;
+        } else {
+            API.postCycleJournal(this.state.journal_id)
+                .then(data => {
+                    this.updateCycleJournals(data);
+                })
+                .then(() =>
+                    this.setState({
+                        journalOptions: [...this.state.journalOptions].filter(
+                            journal => journal.id !== this.state.journal_id
+                        )
+                    })
+                );
+
+            alert("Journal Added!");
+        }
+    };
+
+    handleChange = event => {
+        this.setState({
+            journal_id: event.target.value
+        });
+    };
+
+    getTimeOfDay(currentDateTime) {
+        const currentTime = currentDateTime.getHours();
+
+        if (currentTime >= 6 && currentTime < 12) {
+            return "morning";
+        }
+
+        if (currentTime >= 12 && currentTime < 15) {
+            return "afternoon";
+        }
+
+        if (currentTime >= 15 && currentTime < 18) {
+            return "evening";
+        }
+
+        if (
+            (currentTime >= 18 && currentTime <= 23) ||
+            (currentTime >= 0 && currentTime < 6)
+        ) {
+            return "night";
+        }
+    }
 
     getCycleJournalDetails = id => {
         API.getCycleJournal(id).then(cycleJournal => {
@@ -31,7 +81,8 @@ class Cycle extends React.Component {
 
     updateCycleJournals = journal => {
         this.setState({
-            cycleJournals: [...this.state.cycleJournals, journal]
+            cycleJournals: [...this.state.cycleJournals, journal],
+            journal_id: null
         });
     };
 
@@ -94,9 +145,22 @@ class Cycle extends React.Component {
     componentDidUpdate(prevProps, prevState) {}
 
     render() {
+        const { first_name } = this.props.user;
+        const currentDateTime = new Date();
+        const timeOfDay = this.getTimeOfDay(currentDateTime);
+
         return (
             <main>
                 <h5 className="white-text"> Cycle</h5>
+                <h4 className="light-text"> Good {timeOfDay}, </h4>
+                <h4 className="white-text"> {first_name}</h4>
+                <p className="large-text white-text">
+                    {" "}
+                    <div>
+                        <Moment format="dddd, DD MMMM" />
+                        <br></br>
+                    </div>
+                </p>
 
                 <CycleWheelContainer
                     createNewCycle={this.props.createNewCycle}
@@ -108,14 +172,26 @@ class Cycle extends React.Component {
                 />
                 <br></br>
                 {this.state.journalsVisible ? (
-                    <div className="icon" onClick={this.toggleDisplayJournals}>
-                        <div>Hide Journals</div>
-                        <ChevronUp />
+                    <div>
+                        <button
+                            className="light-btn normal-btn"
+                            onClick={this.toggleDisplayJournals}
+                        >
+                            <p className="small-text dark-text">
+                                Hide Journals
+                            </p>
+                        </button>
                     </div>
                 ) : (
-                    <div className="icon" onClick={this.toggleDisplayJournals}>
-                        <div>Show Journals</div>
-                        <ChevronDown />
+                    <div>
+                        <button
+                            className="light-btn normal-btn"
+                            onClick={this.toggleDisplayJournals}
+                        >
+                            <p className="small-text dark-text">
+                                Show Journals
+                            </p>
+                        </button>
                     </div>
                 )}
                 {this.state.journalsVisible && (
@@ -138,9 +214,10 @@ class Cycle extends React.Component {
                         </button>
                         {this.state.addJournalFormVisible && (
                             <AddJournalForm
-                                updateCycleJournals={this.updateCycleJournals}
                                 getCurrentCycle={this.props.getCurrentCycle}
                                 journalOptions={this.state.journalOptions}
+                                handleChange={this.handleChange}
+                                handleSubmit={this.handleSubmit}
                             />
                         )}
 

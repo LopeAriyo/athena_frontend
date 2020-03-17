@@ -6,20 +6,19 @@ class Welcome extends React.Component {
             <main>
                 <div className="Welcome">
                     <h2> athena. </h2>
-                    <p>Your menstural cycle personal assistant</p>
-                    <Link to="/signup">
+                    <p>Your new favourite period tracker</p>
+                    {/* <Link to="/signup">
                         <button className="dark-btn normal-btn">
                             {" "}
-                            <p className="light-text">Sign Up</p>
+                            <p className="white-text small-text">Sign Up</p>
                         </button>
-                    </Link>
+                    </Link> */}
+                    <br />
                     <Link to="/signin">
                         <button className="white-btn normal-btn">
-                            <p className="dark-text">Sign In</p>
+                            <p className="dark-text small-text">Sign In</p>
                         </button>
                     </Link>
-                    <br />
-                    <p className="grey-text">Not ready? Take a tour</p>
                 </div>
             </main>
         );

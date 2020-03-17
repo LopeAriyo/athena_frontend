@@ -208,6 +208,13 @@ input[type="number"]::-webkit-outer-spin-button {
     border-radius: 50%;
 }
 
+.option-input.checkbox {
+    border-radius: 10%;
+}
+.option-input.checkbox::after {
+    border-radius: 10%;
+}
+
 /* @-webkit-keyframes decrement-prev {
     from {
         opacity: 1;

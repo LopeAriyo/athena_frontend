@@ -20,7 +20,7 @@ import Navigation from "./navigation/Navigation";
 class App extends React.Component {
     state = {
         user: null,
-        userPending: false,
+        userPending: true,
         cycles: [],
         currentCycle: [],
         today: new Date(),
@@ -51,10 +51,14 @@ class App extends React.Component {
             period_length: 1
         };
 
-        API.postCycle(newCycle).then(data => {
-            if (data.error) throw Error(data.error);
-            this.setState({ currentCycle: data });
-        });
+        API.postCycle(newCycle)
+            .then(data => {
+                if (data.error) throw Error(data.error);
+                this.setState({ currentCycle: data });
+            })
+            .catch(error => alert(error));
+
+        alert(`New Cycle created`);
     };
 
     getCycles = data => {
@@ -69,6 +73,8 @@ class App extends React.Component {
         API.patchCurrentCycle({
             period_length: updatedPeriodLength
         });
+
+        alert(`Period Updated`);
     };
 
     patchCurrentCycleThenCreate = (
@@ -158,36 +164,42 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="App">
-                {this.state.user !== null && <Navigation />}
-                <Switch>
-                    <Route
-                        exact
-                        path="/"
-                        component={props => <Welcome {...props} />}
-                    />
-                    <Route
-                        path="/signup"
-                        component={props => (
-                            <SignUp {...props} signUp={this.signUp} />
+            <main className="routes">
+                {this.state.userPending ? (
+                    <div>
+                        <Spinner type="grow" color="primary" />
+                        <Spinner type="grow" color="secondary" />
+                        <Spinner type="grow" color="success" />
+                        <div>Content Loading</div>
+                    </div>
+                ) : (
+                    <div className="App">
+                        {/* */}
+                        {this.state.user !== null && (
+                            <Navigation
+                                user={this.state.user}
+                                signOut={this.signOut}
+                            />
                         )}
-                    />
-                    <Route
-                        path="/signin"
-                        component={props => (
-                            <SignIn {...props} signIn={this.signIn} />
-                        )}
-                    />
+                        <Switch>
+                            <Route
+                                exact
+                                path="/"
+                                component={props => <Welcome {...props} />}
+                            />
+                            <Route
+                                path="/signup"
+                                component={props => (
+                                    <SignUp {...props} signUp={this.signUp} />
+                                )}
+                            />
+                            <Route
+                                path="/signin"
+                                component={props => (
+                                    <SignIn {...props} signIn={this.signIn} />
+                                )}
+                            />
 
-                    {this.state.userPending ? (
-                        <div>
-                            <Spinner type="grow" color="primary" />
-                            <Spinner type="grow" color="secondary" />
-                            <Spinner type="grow" color="success" />
-                            <div>Content Loading</div>
-                        </div>
-                    ) : (
-                        <main className="routes">
                             <Route
                                 exact
                                 path="/home"
@@ -226,6 +238,10 @@ class App extends React.Component {
                                     />
                                 )}
                             />
+                            {/* <Route
+                                path="/calendar"
+                                component={props => <Calendar {...props} />}
+                            /> */}
                             <Route
                                 path="/profile"
                                 component={props => (
@@ -236,10 +252,11 @@ class App extends React.Component {
                                     />
                                 )}
                             />
-                        </main>
-                    )}
-                </Switch>
-            </div>
+                            {/* */}
+                        </Switch>
+                    </div>
+                )}
+            </main>
         );
     }
 }

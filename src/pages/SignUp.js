@@ -8,13 +8,9 @@ import SignUpForm from "../components/SignUpForm.js";
 
 const SignUp = ({ signUp, history }) => (
     <div className="SignUp">
-        <div className="top-nav">
-            <Link to="/">
-                <button>Back</button>
-            </Link>
-            <Link to="/signin">Sign In</Link>
-        </div>
+        <br />
         <h5>Create your account</h5>
+        <br />
         <SignUpForm history={history} />
         {/* <p>-OR-</p>
                 <SignUpWithSocials /> */}

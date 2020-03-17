@@ -170,6 +170,7 @@ class SignUpForm extends React.Component {
                         value={password}
                         onChange={handleChange}
                     />
+                    <br />
                     <input
                         id="passwordConfirmationInput"
                         name="passwordConfirmation"

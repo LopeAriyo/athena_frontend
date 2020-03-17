@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom/";
+// import { Link } from "react-router-dom/";
 
 import SignInForm from "../components/SignInForm";
 
@@ -8,19 +8,15 @@ import SignInForm from "../components/SignInForm";
 
 const SignIn = ({ signIn, history }) => (
     <div className="SignIn">
-        <div className="top-nav">
-            <Link to="/">
-                <button>Back</button>
-            </Link>
-            <Link to="/signup">Sign Up</Link>
-        </div>
+        <br />
         <h5>Welcome back </h5>
+        <br />
         <SignInForm signIn={signIn} history={history} />
         {/* <p>-OR-</p>
                 <SignInWithSocials /> */}
-        <p className="grey-text">
+        {/* <p className="grey-text">
             Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
+        </p> */}
     </div>
 );
 

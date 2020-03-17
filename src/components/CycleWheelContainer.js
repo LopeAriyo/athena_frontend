@@ -157,14 +157,12 @@ class CycleWheelContainer extends React.Component {
                 cycle[roundedCycleDay - 1].referenceDate.month - 1,
                 cycle[roundedCycleDay - 1].referenceDate.day
             );
-            console.log(date1.toDateString());
-            console.log(date2.toDateString());
 
             if (date1.toDateString() === date2.toDateString()) {
-                console.log("true");
+                // this.setState({ dateMatch: true });
                 return true;
             } else {
-                console.log("false");
+                // this.setState({ dateMatch: false });
                 return false;
             }
         }
@@ -207,7 +205,6 @@ class CycleWheelContainer extends React.Component {
             periodArray,
             cycleArray
         } = this.state;
-        console.log("cyclearray", cycleArray, cycleDay);
 
         if (cycleArray.length === 0) return null;
 
@@ -291,39 +288,41 @@ class CycleWheelContainer extends React.Component {
                         )}
                     </button>
                 </div>
-                <div className="cycle-nav">
-                    <div>
-                        {" "}
-                        <AddPeriod
-                            onClick={() => this.increasePeriodLength()}
-                        />{" "}
+                {this.doesDateMatch(cycleDay, cycleArray) === true && (
+                    <div className="cycle-nav">
+                        <div title="log your period">
+                            {" "}
+                            <AddPeriod
+                                onClick={() => this.increasePeriodLength()}
+                            />{" "}
+                        </div>
+                        <div title="create a new cycle">
+                            <AddCycle
+                                onClick={() =>
+                                    this.props.patchCurrentCycle(
+                                        this.state.cycleLength,
+                                        this.state.estimatedCycleLength,
+                                        this.state.estimatedPeriodLength
+                                    )
+                                }
+                            />
+                        </div>
+                        <div title="remove today's period">
+                            <DeletePeriod
+                                onClick={() => this.decreasePeriodLength()}
+                            />
+                        </div>
+                        <div title="delete current cycle">
+                            <DeleteCycle
+                                onClick={() =>
+                                    this.props.deleteCycle(
+                                        this.props.currentCycle.id
+                                    )
+                                }
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <AddCycle
-                            onClick={() =>
-                                this.props.patchCurrentCycle(
-                                    this.state.cycleLength,
-                                    this.state.estimatedCycleLength,
-                                    this.state.estimatedPeriodLength
-                                )
-                            }
-                        />
-                    </div>
-                    <div>
-                        <DeletePeriod
-                            onClick={() => this.decreasePeriodLength()}
-                        />
-                    </div>
-                    <div>
-                        <DeleteCycle
-                            onClick={() =>
-                                this.props.deleteCycle(
-                                    this.props.currentCycle.id
-                                )
-                            }
-                        />
-                    </div>
-                </div>
+                )}
             </div>
         );
     }

@@ -109,7 +109,7 @@ class EntryForm extends React.Component {
                                               ].includes(op.id)
                                             : false
                                     }
-                                    className="option-input"
+                                    className="option-input checkbox"
                                 />
                                 <p key={op.id}>{op.answer}</p>
                             </label>
@@ -124,7 +124,14 @@ class EntryForm extends React.Component {
                                     name={question.id}
                                     key={question.id}
                                     type="radio"
-                                    value={this.state.formData[question.id]}
+                                    value={op.id}
+                                    checked={
+                                        this.state.formData[question.id]
+                                            ? this.state.formData[
+                                                  question.id
+                                              ].includes(op.id)
+                                            : false
+                                    }
                                     className="option-input radio"
                                 />
                                 <p key={op.id}>{op.answer}</p>
